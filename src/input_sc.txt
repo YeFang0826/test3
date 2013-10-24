@@ -1,0 +1,61 @@
+program main [] = 
+	real N = 4;
+	real A = 6;
+	
+	mechanism m[list[] p][list[] result]=
+		list[] us;
+		for i=0 to A-1
+			do
+			 us[i] = 0;
+			for j=0 to N-1
+				do
+					us[i]= us[i] + $ c, j $ * p[j][i];
+			end for
+		end for  
+		result = us;
+	end m
+	 
+   agent ag= 
+   	list[] preference;
+   	for i=0 to A-1
+   		do
+   		preference[i] = new var(u, i);
+   	end for
+   end ag
+    
+    execute
+      list[] a;
+      list[] polla;
+      list[] b;
+      list[] pollb;
+      
+      for i = 0 to N-1
+      	do 
+      		a[i] = new ag(x, i);
+      		polla[i] = a[i].preference;
+      end for
+      
+      for i = 0 to N-1
+      	do 
+      		b[i] = new ag(y, i);
+      		pollb[i] = b[i].preference;
+      end for
+      
+     list[] return;
+     return[0] = m(polla);
+     return[1] = m(pollb);
+     
+     end execute
+ end program main
+@ post : forall(i, 0, A-1), forall(j, i+1, A),
+ 	{{ forall(k, 0, N), { polla[k][j]< polla[k][i] } implies { return[0][j]< return[0][i] }}
+ 			and 
+ 		{ forall(k, 0, N), 
+ 			{{{ polla[k][j]<= polla[k][i] }  and  { pollb[k][j]<= pollb[k][i] }} 
+      			or {{ polla[k][i]<= polla[k][j]} and { pollb[k][i]<= pollb[k][j]}}}
+ 					implies
+ 					{{{return[0][j]<= return[0][i]} and {return[1][j]<= return[1][i]}}
+            or {{ return[0][i]<= return[0][j]} and { return[1][i]<= return[1][j]}}}}}@ 
+ 
+ 
+ 
