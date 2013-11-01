@@ -124,7 +124,6 @@ public class executeCode {
     	HashMap<object, HashMap<String, object>> knownVarMap = null; // assume expr -> x = expr
 		HashMap<object, object> out = new HashMap<object, object>();
 		
-    	//HashMap<String,object> temp = new HashMap<String, object>();
     	
     	for(int i=0; i<this.bp.size(); i++){
     		knownVars = new HashMap<String, object>();

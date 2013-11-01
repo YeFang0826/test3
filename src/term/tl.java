@@ -32,16 +32,6 @@ public class tl extends term{
 		return ret;
 	}
 	
-	public tl eval_1(String index, int value){
-		tl newtl = new tl(this.tlname);
-		ArrayList<expression> e = new ArrayList<expression>();
-		for(int i=0; i<this.indexes.size(); i++){
-			e.add(this.indexes.get(i).eval_1(index, value));
-		}
-		newtl.indexes = e;
-		return newtl;
-	}
-	
 	public object access_in_agent(HashMap<String, object> knownVar){
 		object ret = null;
 		object lhs = null;

@@ -18,10 +18,7 @@ public class newVar extends term {
 		newVar newv = new newVar(this.name.eval_0(globalVar), this.lable.eval_0(globalVar));
 		return newv;
 	}
-	public newVar eval_1(String index, int value){
-		newVar newv = new newVar(this.name.eval_1(index, value), this.lable.eval_1(index, value));
-		return newv;
-	}
+	
 	public string eval_in_agent(HashMap<String, object> knownVar){
 		if(this.name.eval_agent_expr(knownVar).type.equals("string") && this.lable.eval_agent_expr(knownVar).type.equals("string")){
 			return new string(((string)this.name.eval_agent_expr(knownVar)).s +"_"+((string)this.lable.eval_agent_expr(knownVar)).s);

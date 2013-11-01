@@ -29,16 +29,6 @@ public class sortedList extends term{
 		return ret;
 	}
 	
-	public sortedList eval_1(String index, int value){
-		ArrayList<expression> temp = new ArrayList<expression>();
-		
-		for(int i=0; i<this.dimension.size(); i++){
-			temp.add(this.dimension.get(i).eval_1(index, value));
-		}
-		sortedList ret = new sortedList(this.lname);
-		ret.dimension = temp;
-		return ret;
-	}
 	public String eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
 		String ret = null;
 		ArrayList<object> indexes = new ArrayList<object>();

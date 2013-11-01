@@ -87,13 +87,10 @@ public class agentTemplate {
 				}
 				else
 					knownVar.put(((defVarStatement)s).name, null);
-				
-				//System.out.println("In agent template: "+this.name + " has variable " + ((defVarStatement)s).name);
 			}
 			else if(s.type.equals("defineFunStatement")){
 				((defineFunStatement)s).isPrivate = this.name;
 				this.funs.put(((defineFunStatement)s).name, (defineFunStatement)s);
-				//System.out.println(this.name + " has function " + ((defineFunStatement)s).name);
 			}
 			else if(s.type.equals("assignStatement")){
 				e = ((assignStatement)s).assignment.eval_agent_expr(knownVar); // return will not be a map;
@@ -101,6 +98,7 @@ public class agentTemplate {
 				if(((assignStatement)s).name!=null && ((assignStatement)s).assignment!= null){
 					knownVar.put(((assignStatement)s).name, e);
 				}
+				/******************************************************************************/
 				else if(((assignStatement)s).lhs != null && ((assignStatement)s).assignment!= null){ 
 					String name = ((assignStatement)s).lhs.tlname; 
 					if(knownVar.containsKey(name)){
@@ -113,18 +111,41 @@ public class agentTemplate {
 							}
 						}
 						else if(temptl.type.equals("list")){
-							ArrayList<object> lhs = ((list)temptl).l;
-							for(int k=0; k<((assignStatement)s).lhs.indexes.size()-1; k++){
-    							x = ((assignStatement)s).lhs.indexes.get(k).eval_agent_expr(knownVar);
-    							if(x.type.equals("number"))
-    								lhs = ((list)lhs.get((int)((number)x).n)).l;
-    						}
-							lhs.add(e);
+							object lhs = (list)temptl;
+							for(int k=0; k<((assignStatement)s).lhs.indexes.size(); k++){
+								x = ((assignStatement)s).lhs.indexes.get(k).eval_agent_expr(knownVar);
+								if(lhs.type.equals("tuple")){
+									if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
+										((tuple)lhs).t.remove((int)((number)x).n);
+										((tuple)lhs).t.add((int)((number)x).n, e);
+									}
+									else if(((tuple)lhs).t.size()> (int)((number)x).n)
+										lhs = ((tuple)lhs).t.get((int)((number)x).n);
+									else
+										((tuple)lhs).t.add(e);
+								}
+								else if(lhs.type.equals("list")){
+									if(((list)lhs).l.size()==((int)((number)x).n+1)){
+										((list)lhs).l.remove((int)((number)x).n);
+										((list)lhs).l.add((int)((number)x).n, e);
+									}
+									else if(((list)lhs).l.size()> (int)((number)x).n)
+										lhs = ((list)lhs).l.get((int)((number)x).n);
+									else
+										((list)lhs).l.add(e);
+								}
+								else{
+									System.out.println("error in fetch list.");
+								}
+							}
 						}
     				}
+					
 					else 
 						System.out.println("bad access");
 				}
+				/**********************************************************************************/
+				
 			}
 		}
 		

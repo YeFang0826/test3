@@ -50,25 +50,15 @@ public class defineFunStatement extends statement{
     	this.code.add(c);
     }
     
-    public void testCode(){
-    	for(int i=0; i<this.bp.size(); i++){
-    		System.out.println(i+ ":");
-    		for(int j=0; j<this.bp.get(i).size(); j++){
-        		System.out.print("  "+j+":" + this.bp.get(i).get(j).type);
-        	}
-    		System.out.println();
-    	}
-    }
     
-   // calculate return value in terms of inputs. 
-   //  for forloop lbound and ubound should be resolved, otherwise ERROR
-    // unroll the loop at compile time
     public void eval_0(HashMap<String, expression> globalVar){ // replace id with global constants
     	if(this.pre!=null)
     		this.pre = this.pre.eval_0(globalVar);
+    	
     	for(int i=0; i<this.code.size(); i++){
     		this.code.get(i).eval_0(globalVar);
     	}
+    	
     }
     
     public void basicPath(HashMap<String, expression> globalVar){
@@ -398,27 +388,39 @@ public class defineFunStatement extends statement{
             								((tuple)temptl).t.add((object)tempm.values().toArray()[k]);
             							}
             						}
+            				 /*****************************************************************************************/
             						else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
-            							for(int m=0; m<((assignStatement)s).lhs.indexes.size()-1; m++){
+            							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
                 							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
                 							if(lhs.type.equals("tuple")){
-            									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+                								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
+                									((tuple)lhs).t.remove((int)((number)x).n);
+                									((tuple)lhs).t.add((int)((number)x).n, (object)tempm.values().toArray()[k]);
+                								}
+                									
+                								else if(((tuple)lhs).t.size()> (int)((number)x).n)
+                									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+                								else
+                									((tuple)lhs).t.add((object)tempm.values().toArray()[k]);
             								}
             								else if(lhs.type.equals("list")){
-            									lhs = ((list)lhs).l.get((int)((number)x).n);
+            									if(((list)lhs).l.size()==((int)((number)x).n+1)){
+            										((list)lhs).l.remove((int)((number)x).n);
+            										((list)lhs).l.add((int)((number)x).n, (object)tempm.values().toArray()[k]);
+            									}
+            										
+            									else if(((list)lhs).l.size()> (int)((number)x).n)
+                									lhs = ((list)lhs).l.get((int)((number)x).n);
+                								else
+                									((list)lhs).l.add((object)tempm.values().toArray()[k]);
             								}
             								else{
             									System.out.println("error in fetch list.");
             								}
                 						}
-            							if(lhs.type.equals("tuple"))
-            								((tuple)lhs).t.add((object)tempm.values().toArray()[k]);
-            							else if(lhs.type.equals("list"))
-            								((list)lhs).l.add((object)tempm.values().toArray()[k]);
-            							else
-            								System.out.print("error in getting left hand list");
             						}
+            				/*********************************************************************************************************/
                 				}
         						ret.put((object)tempm.keySet().toArray()[k], tempv);
         					}
@@ -437,24 +439,34 @@ public class defineFunStatement extends statement{
         						}
         						else if(temptl.type.equals("list")){
         							object lhs = (list)temptl;
-        							for(int m=0; m<((assignStatement)s).lhs.indexes.size()-1; m++){
+        							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
             							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
             							if(lhs.type.equals("tuple")){
-        									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+            								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
+            									((tuple)lhs).t.remove((int)((number)x).n);
+            									((tuple)lhs).t.add((int)((number)x).n, e);
+            								}
+            									
+            								else if(((tuple)lhs).t.size()> (int)((number)x).n)
+            									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+            								else
+            									((tuple)lhs).t.add(e);
         								}
         								else if(lhs.type.equals("list")){
-        									lhs = ((list)lhs).l.get((int)((number)x).n);
+        									if(((list)lhs).l.size()==((int)((number)x).n+1)){
+        										((list)lhs).l.remove((int)((number)x).n);
+        										((list)lhs).l.add((int)((number)x).n, e);
+        									}
+        										
+        									else if(((list)lhs).l.size()> (int)((number)x).n)
+            									lhs = ((list)lhs).l.get((int)((number)x).n);
+            								else
+            									((list)lhs).l.add(e);
         								}
         								else{
         									System.out.println("error in fetch list.");
         								}
             						}
-        							if(lhs.type.equals("tuple"))
-        								((tuple)lhs).t.add(e);
-        							else if(lhs.type.equals("list"))
-        								((list)lhs).l.add(e);
-        							else
-        								System.out.print("error in getting left hand list");
         						}
         					}
         				}
@@ -490,24 +502,34 @@ public class defineFunStatement extends statement{
             						}
         							else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
-            							for(int n=0; n<((assignStatement)s).lhs.indexes.size()-1; n++){
+            							for(int n=0; n<((assignStatement)s).lhs.indexes.size(); n++){
                 							x = ((assignStatement)s).lhs.indexes.get(n).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
                 							if(lhs.type.equals("tuple")){
-            									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+                								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
+                									((tuple)lhs).t.remove((int)((number)x).n);
+                									((tuple)lhs).t.add((int)((number)x).n, e);
+                								}
+                									
+                								else if(((tuple)lhs).t.size()> (int)((number)x).n)
+                									lhs = ((tuple)lhs).t.get((int)((number)x).n);
+                								else
+                									((tuple)lhs).t.add(e);
             								}
             								else if(lhs.type.equals("list")){
-            									lhs = ((list)lhs).l.get((int)((number)x).n);
+            									if(((list)lhs).l.size()==((int)((number)x).n+1)){
+            										((list)lhs).l.remove((int)((number)x).n);
+            										((list)lhs).l.add((int)((number)x).n, e);
+            									}
+            										
+            									else if(((list)lhs).l.size()> (int)((number)x).n)
+                									lhs = ((list)lhs).l.get((int)((number)x).n);
+                								else
+                									((list)lhs).l.add(e);
             								}
             								else{
             									System.out.println("error in fetch list.");
             								}
                 						}
-            							if(lhs.type.equals("tuple"))
-            								((tuple)lhs).t.add(e);
-            							else if(lhs.type.equals("list"))
-            								((list)lhs).l.add(e);
-            							else
-            								System.out.print("error in getting left hand list");
             						}
         							condition = new string("(" + ((string)tempm.keySet().toArray()[m]).s + " and " + ((string)ret.keySet().toArray()[k]).s + ")");
         							newret.put(condition, tempv);

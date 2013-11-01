@@ -30,15 +30,4 @@ public class directCall extends functionCall{
 		
 	}
 	
-	public expression eval_1(String index, int value){
-		directCall tempc = new directCall(this.name);
-		ArrayList<expression> input = new ArrayList<expression>();
-		
-		for(int i=0; i< this.inputs.size(); i++){
-			input.add(this.inputs.get(i).eval_1(index, value));
-		}
-		tempc.inputs = input;
-		return new expression(new functionCallT(tempc));
-		
-	}
 }

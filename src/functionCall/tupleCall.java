@@ -29,23 +29,6 @@ public class tupleCall extends functionCall{
 		return ret;
 	}
 	
-	public tupleCall eval_1(String index, int value){ // unrolling forloops
-
-		tupleCall tempc = new tupleCall(this.method);
-		ArrayList<expression> input = new ArrayList<expression>();
-		
-		for(int i=0; i<this.inputs.size(); i++){
-			input.add(this.inputs.get(i).eval_1(index, value));
-		}
-		if(this.method.equals("access-tuple"))
-			input.add(this.inputs.get(this.inputs.size()-1));
-		else
-			input.add(this.inputs.get(this.inputs.size()-1).eval_1(index, value));
-		
-		tempc.inputs = input;
-		return tempc;
-	}
-	
 	public int size(object name, HashMap<String, object> knownVars){
 		if(name.type.equals("string") && knownVars.get(name).type.equals("tuple")){
 			return ((tuple)knownVars.get(name)).t.size();

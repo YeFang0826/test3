@@ -88,7 +88,7 @@ public class forStatement extends statement{
 						}
 					}
 					else{
-						System.out.println("this type of statement is not supported in forloop");
+						System.out.println("this type of statement is not supported in forloop***IFSTATEMENT IS NOT SUPPORTED IN FORLOOP***");
 					}
 				}
 			}

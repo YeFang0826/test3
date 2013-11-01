@@ -415,32 +415,6 @@ public class logicExpression {
 		this.f = this.qe(globalVar);
 	}
 	
-	public logicExpression eval_1(String index, int value){
-		logicExpression ret = null;
-		if(this.leaf!=null){
-			logicExpression temp = new logicExpression();
-			temp.leaf = this.leaf.eval_1(index, value);
-			ret = temp;
-		}
-		else if(this.l != null && this.r !=null && !this.operator.equals("")){
-			logicExpression left = this.l.eval_1(index, value);
-			logicExpression right = this.r.eval_1(index, value);
-			logicExpression temp = new logicExpression();
-			temp.l = left;
-			temp.r = right;
-			temp.operator = this.operator;
-			ret = temp;
-		}
-		else if(this.r!=null && !this.operator.equals("")){
-			logicExpression right = this.r.eval_1(index, value);
-			logicExpression temp = new logicExpression();
-			temp.r = right;
-			temp.operator = this.operator;
-			ret = temp;
-		}
-		return ret;
-	}
-	
 	public String pre_eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism,
 			ArrayList<String> existsVar, ArrayList<String> forallVar){
 		if(this.f!=null){

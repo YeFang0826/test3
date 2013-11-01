@@ -27,14 +27,7 @@ public class holeT extends term{
 		ret.lable = newlable;
 		return ret;
 	}
-	public holeT eval_1(String index, int value){
-		ArrayList<expression> newlable = new ArrayList<expression>();
-		for(int i=0; i<this.lable.size(); i++){
-			newlable.add(this.lable.get(i).eval_1(index, value));
-		}
-		this.lable = newlable;
-		return this;
-	}
+
 	public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
 			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
 		String ret = this.name; 

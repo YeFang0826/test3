@@ -44,21 +44,6 @@ public class accessField {
 			return this;
 	}
 	
-	public accessField eval_1(String index, int value){
-		if(this.objectl!=null){
-			tl tempc = new tl(this.objectl.tlname);
-			ArrayList<expression> input = new ArrayList<expression>();
-			
-			for(int i=0; i< this.objectl.indexes.size(); i++){
-				input.add(this.objectl.indexes.get(i).eval_1(index, value));
-			}
-			tempc.indexes = input;
-			return new accessField(tempc, this.field);
-		}
-		else
-			return this;
-	}
-
 	public object exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> exsitsVar, ArrayList<String> forallVar){
 		if(this.object!=null){
 			if(knownVars.containsKey(this.object) && knownVars.get(this.object).type.equals("agent")){

@@ -26,15 +26,6 @@ public class indirectCall extends functionCall{
 		tempc.inputs = input;
 		return new expression(new functionCallT(tempc));
     }
-    public expression eval_1(String index, int value){
-    	indirectCall tempc = new indirectCall(this.af.eval_1(index, value));
-    	ArrayList<expression> input = new ArrayList<expression>();
-		
-		for(int i=0; i< this.inputs.size(); i++){
-			input.add(this.inputs.get(i).eval_1(index, value));
-		}
-		tempc.inputs = input;
-		return new expression(new functionCallT(tempc));
-    }
+   
     
 }

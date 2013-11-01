@@ -21,10 +21,7 @@ public class setExclude extends term{
 		setExclude ret = new setExclude(this.set,this.exclude.eval_0(globalVar));
 		return ret;
 	}
-	public setExclude eval_1(String index, int value){
-		setExclude s = new setExclude(this.set, this.exclude.eval_1(index, value));
-		return s;
-	}
+	
 	
 	public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String>existsVar, ArrayList<String> forallVar){
 		ArrayList<object> ret = new ArrayList<object>();

@@ -27,23 +27,6 @@ public class listCall extends functionCall{
 		return ret;
 	}
 	
-	public listCall eval_1(String index, int value){ // unrolling forloops
-
-		listCall tempc = new listCall(this.method);
-		ArrayList<expression> input = new ArrayList<expression>();
-		
-		for(int i=0; i<this.inputs.size(); i++){
-			input.add(this.inputs.get(i).eval_1(index, value));
-		}
-		if(this.method.equals("access-list"))
-			input.add(this.inputs.get(this.inputs.size()-1));
-		else
-			input.add(this.inputs.get(this.inputs.size()-1).eval_1(index, value));
-		
-		tempc.inputs = input;
-		return tempc;
-	}
-	
 
 	public int length(object name, HashMap<String, object> knownVars){
 		if(name.type.equals("string") && knownVars.get(name).type.equals("list")){
@@ -51,9 +34,11 @@ public class listCall extends functionCall{
 		}
 		return -1;
 	}
+
 	public list construct(ArrayList<object> elements){
 		return new list(elements);
 	}
+	
 	public map InsertSorted(ArrayList<object> in){
 		HashMap<object, object> ret = new HashMap<object, object>();
 		ArrayList<String> s = new ArrayList<String>();

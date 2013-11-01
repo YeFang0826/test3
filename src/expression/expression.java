@@ -169,10 +169,6 @@ public class expression {
 				if(this.leaf.type.equals("var")){
 					if(globalVar.containsKey(((var)this.leaf).s) && globalVar.get(((var)this.leaf).s)!= null){
 						ret = globalVar.get(((var)this.leaf).s);
-						//if(ret.leaf.type.equals("var"))
-							//System.out.println(((var)ret.leaf).s);
-						//else if(ret.leaf.type.equals("num"))
-							//System.out.println(((num)ret.leaf).value);
 					}
 					else
 						return this;
@@ -260,7 +256,7 @@ public class expression {
 			
 			return ret;
 		}
-		
+	/*	
 		public expression eval_1(String index, int value){ // replace index with real value in forloop
 			if(this.leaf!=null){ // access field, functioncall, var, setExclude 
 				double test;
@@ -324,6 +320,7 @@ public class expression {
 			}
 			
 		}
+		*/
 		
 		public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
 				defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){

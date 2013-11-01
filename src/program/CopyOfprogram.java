@@ -19,39 +19,37 @@ import statement.*;
 import term.*;
 import functionCall.*;
 
-public class program {
+public class CopyOfprogram {
 	
 	public HashMap<String, expression> globalvar;
 	public defineFunStatement mechanism; 
-	public HashMap<String, agentTemplate> agentTemplate; // different type of agent
-	//public HashMap<String,defineFunStatement> funs; //global functions
-	public HashMap<String,agentO> agents; // agent instance
+	public HashMap<String, agentTemplate> agentTemplate; 
 	public logicExpression pre = null;
 	public logicExpression post = null;
 	public executeCode code;
+	
 	public ArrayList<String> existsVar;
 	public ArrayList<String> forallVar;
+	public HashMap<String,agentO> agents; 
 	
-	public program(){
+	public CopyOfprogram(){
 		this.globalvar = new HashMap<String, expression>();
-		//this.funs = new HashMap<String,defineFunStatement>();
-		this.agents = new HashMap<String,agentO>();
 		this.agentTemplate = new HashMap<String, agentTemplate>();
+
+		this.agents = new HashMap<String,agentO>();
 		this.existsVar = new ArrayList<String>();
 		this.forallVar = new ArrayList<String>();
 	}
 	
 	public void inputVar(ArrayList<parameter> in){
 		for(int i=0; i<in.size(); i++){
-			this.globalvar.put(in.get(i).name, new expression(new var(in.get(i).name)));
-			//System.out.println("input:"+in.get(i).name);
+			this.globalvar.put(in.get(i).name, new expression(new var(in.get(i).name)));  // If the program has input
 		}
 	}
 	
 	public void addD(defVarStatement d){
 		if(((defVarStatement)d).init != null){
 			this.globalvar.put(((defVarStatement)d).name,((defVarStatement)d).init); //should var has to have assignment here?
-			//System.out.println("define var:"+((defVarStatement)d).name);
 		}
 		else
 			this.globalvar.put(((defVarStatement)d).name, null);
@@ -107,3 +105,10 @@ public class program {
 	}
 	
 }
+/*
+public void addf(defineFunStatement f){
+	((defineFunStatement)f).isPrivate = "global";
+	//this.funs.put(f.name, f);
+}
+*/
+

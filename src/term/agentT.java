@@ -27,14 +27,7 @@ public class agentT extends term{
 		ret.lable = newlable;
 		return ret;
 	}
-	public expression eval_1(String index, int value){
-		expression newindex = this.index.eval_1(index, value);
-		expression newlable = this.lable.eval_1(index, value);
-		agentT newa = new agentT(this.atype);
-		newa.index = newindex;
-		newa.lable = newlable;
-		return new expression(newa);
-	}
+	
 	public agentO exe(HashMap<String, agentTemplate> agentTemplate, HashMap<String, object> knownVars, defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
 	
 		agentTemplate template = agentTemplate.get(this.atype);
