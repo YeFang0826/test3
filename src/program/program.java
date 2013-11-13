@@ -24,7 +24,6 @@ public class program {
 	public HashMap<String, expression> globalvar;
 	public defineFunStatement mechanism; 
 	public HashMap<String, agentTemplate> agentTemplate; // different type of agent
-	//public HashMap<String,defineFunStatement> funs; //global functions
 	public HashMap<String,agentO> agents; // agent instance
 	public logicExpression pre = null;
 	public logicExpression post = null;
@@ -34,7 +33,6 @@ public class program {
 	
 	public program(){
 		this.globalvar = new HashMap<String, expression>();
-		//this.funs = new HashMap<String,defineFunStatement>();
 		this.agents = new HashMap<String,agentO>();
 		this.agentTemplate = new HashMap<String, agentTemplate>();
 		this.existsVar = new ArrayList<String>();
@@ -44,14 +42,12 @@ public class program {
 	public void inputVar(ArrayList<parameter> in){
 		for(int i=0; i<in.size(); i++){
 			this.globalvar.put(in.get(i).name, new expression(new var(in.get(i).name)));
-			//System.out.println("input:"+in.get(i).name);
 		}
 	}
 	
 	public void addD(defVarStatement d){
 		if(((defVarStatement)d).init != null){
-			this.globalvar.put(((defVarStatement)d).name,((defVarStatement)d).init); //should var has to have assignment here?
-			//System.out.println("define var:"+((defVarStatement)d).name);
+			this.globalvar.put(((defVarStatement)d).name,((defVarStatement)d).init); 
 		}
 		else
 			this.globalvar.put(((defVarStatement)d).name, null);

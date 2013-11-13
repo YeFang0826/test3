@@ -68,7 +68,15 @@ public class testSolver {
 	   
 	   
 	   for(int i =0; i<subProblems.size(); i++){
+		   System.out.println(i + "th subproblem");
 		   dnf=dnfConvertor(subProblems.get(i)); 
+		   for(int j=0; j< dnf.size(); j++){
+			   for(int k=0; k<dnf.get(j).size(); k++)
+				   System.out.println(dnf.get(j).get(k).singlton);
+			   System.out.println("**********************************************");
+		   }
+		  
+		   
 		   FarkerTranslation(dnf,existVar,forallVar,LPPs); 
 	  }
 	 
@@ -962,7 +970,7 @@ public class testSolver {
 		   boolean first2=true;
 		   
 		   for(int i =0; i<dnf.size();i++){
-			   //System.out.println("LPP"+i);
+			   System.out.println("LPP"+i);
 			   String[][] coefficients = new String[dnf.get(i).size()][forallVar.size() + 1];
 			   ArrayList<String> addvarTemp = new ArrayList<String>(dnf.get(i).size());	
 			   ArrayList<String> geq = new ArrayList<String>();
@@ -989,7 +997,7 @@ public class testSolver {
 				   //System.out.print("{");
 				  if(dnf.get(i).get(j).singlton!=null){
 					  ineq = dnf.get(i).get(j).singlton;// get coefficient A&b
-					  //System.out.println("Before == Ineq:"+ineq);
+					  System.out.println(ineq);
 				    	  //================== change to <= | < b =================================//
 					  tempc="";
 					  boolean rhs = false;

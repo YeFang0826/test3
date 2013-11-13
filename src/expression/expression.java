@@ -256,71 +256,7 @@ public class expression {
 			
 			return ret;
 		}
-	/*	
-		public expression eval_1(String index, int value){ // replace index with real value in forloop
-			if(this.leaf!=null){ // access field, functioncall, var, setExclude 
-				double test;
-				if(this.leaf.type.equals("var")){
-					if(((var)this.leaf).s.equals(index)){
-						//System.out.println(((var)this.leaf).s + " " + value);
-						return new expression(new num(value));
-					}
-				}
-				else if(this.leaf.type.equals("accessField")){
-					if(((accessT)this.leaf).af.objectl!=null){
-						return new expression(new accessT(((accessT)this.leaf).af.eval_1(index, value)));
-					}
-					else
-						return this;
-				}
-				else if(this.leaf.type.equals("tupleCall")){
-					return new expression(new functionCallT(((tupleCall)((functionCallT)this.leaf).call).eval_1(index, value)));
-				}
-				else if(this.leaf.type.equals("listCall")){  // result = result + p[][]
-					return new expression(new functionCallT(((listCall)(((functionCallT)this.leaf).call)).eval_1(index, value)));
-				}
-				else if(this.leaf.type.equals("direct")){
-					return ((directCall)(((functionCallT)this.leaf).call)).eval_1(index, value);
-				}
-				else if(this.leaf.type.equals("indirect")){
-					return ((indirectCall)((functionCallT)this.leaf).call).eval_1(index, value);
-				}
-				else if(this.leaf.type.equals("agent")){
-					return ((agentT)this.leaf).eval_1(index, value);
-				}
-				else if(this.leaf.type.equals("tlaccess")){
-					return new expression(((tl)this.leaf).eval_1(index, value));
-				}
-				else if(this.leaf.type.equals("setExclude")){
-					return new expression(((setExclude)this.leaf).eval_1(index, value));
-				}
-				else if(this.leaf.type.equals("sortedList")){
-					return new expression(((sortedList)this.leaf).eval_1(index, value));
-				}
-				else if(this.leaf.type.equals("hole")){
-					return new expression(((holeT)this.leaf).eval_1(index, value));
-				}
-				else if(this.leaf.type.equals("newVar")){
-					return new expression(((newVar)this.leaf).eval_1(index, value));
-				}
-				
-				return this;
-			}
-			else if(this.left!=null && !this.op.equals("") && this.right!=null){
-				expression l = this.left.eval_1(index, value);
-				expression r = this.right.eval_1(index, value);
-				return new expression(l,r, this.op);
-			}
-			else if(this.right!=null && !this.op.equals("")){
-				return new expression(this.right.eval_1(index, value), this.op);
-				
-			}
-			else{
-				return this;
-			}
-			
-		}
-		*/
+	
 		
 		public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
 				defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
