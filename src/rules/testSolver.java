@@ -23,7 +23,7 @@ public class testSolver {
 	// the input formula is an intermediate result, so we can assume that there is no grammar in the input formula
 	// 1.(F) 2.Spaces only between and|or|implies|not 3.each singlton needs to be in parentheses. 
 	   
-	   Scanner sc= new Scanner(new File("src/input_vcg.txt"));
+	   Scanner sc= new Scanner(new File("src/input_positionA.txt"));
 		String input = "";
 		String temp;
 		while(sc.hasNext()){
@@ -68,14 +68,15 @@ public class testSolver {
 	   
 	   
 	   for(int i =0; i<subProblems.size(); i++){
-		   System.out.println(i + "th subproblem");
+		   //System.out.println(i + "th subproblem");
 		   dnf=dnfConvertor(subProblems.get(i)); 
+		   /*
 		   for(int j=0; j< dnf.size(); j++){
 			   for(int k=0; k<dnf.get(j).size(); k++)
-				   System.out.println(dnf.get(j).get(k).singlton);
+				   //System.out.println(dnf.get(j).get(k).singlton);
 			   System.out.println("**********************************************");
 		   }
-		  
+		  */
 		   
 		   FarkerTranslation(dnf,existVar,forallVar,LPPs); 
 	  }

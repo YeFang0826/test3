@@ -686,6 +686,25 @@ public class expression {
 			return ret;
 		}
 		
+		public expression replace_hole(String iterator){
+			if(this.leaf!=null){
+				if(this.leaf.type.equals("hole")){
+					//System.out.println("test Point: Iterator=" + iterator);
+					((holeT)this.leaf).lable.add(new expression(new var(iterator)));
+				}
+				else if(this.leaf.type.equals("expression")){
+					((expressionT)this.leaf).expr.replace_hole(iterator);
+				}
+			}
+			else if(this.left!=null && this.right!=null){
+				this.left.replace_hole(iterator);
+				this.right.replace_hole(iterator);
+			}
+			else if(this.right!=null)
+				this.right.replace_hole(iterator);
+			
+			return this;
+		}
 }
 
 

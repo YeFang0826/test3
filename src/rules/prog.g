@@ -484,9 +484,7 @@ quantifier returns [quantifier quantifier]:
    
         
 hole returns [holeT hole]: 
-      '$'  ID { $hole = new holeT($ID.text); }
-       ',' op1 = expr { $hole.lable.add($op1.expr); }
-       (',' op2 = expr { $hole.lable.add($op2.expr); } )* '$'
+      '?' ID { $hole = new holeT($ID.text);}
       ;
 ptype : 
         REAL

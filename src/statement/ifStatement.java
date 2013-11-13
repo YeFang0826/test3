@@ -52,6 +52,40 @@ public class ifStatement extends statement{
 		}
 	}
 	
+	public void replace_hole(String iterator){
+		statement s;
+		for(int i=0; i<this.thens.size(); i++){
+			for(int j=0; j<this.thens.get(i).size(); j++){
+				s = this.thens.get(i).get(j);
+				if(s.type.equals("defVarStatement") && ((defVarStatement)s).init!=null)
+					((defVarStatement)s).init = ((defVarStatement)s).init.replace_hole(iterator);
+				else if(s.type.equals("assignStatement") && ((assignStatement)s).assignment!=null)
+					((assignStatement)s).assignment = ((assignStatement)s).assignment.replace_hole(iterator);
+				else if(s.type.equals("ifStatement")){
+					((ifStatement)s).replace_hole(iterator);
+				}
+				else if(s.type.equals("forStatement")){
+					((forStatement)s).replace_hole();
+					statement s1;
+					for(int k=0; k<((forStatement)s).body.size();k++){
+						s1 = ((forStatement)s).body.get(k);
+						if(s1.type.equals("defVarStatement") && ((defVarStatement)s1).init!=null)
+							((defVarStatement)s1).init = ((defVarStatement)s1).init.replace_hole(iterator);
+						else if(s1.type.equals("assignStatement") && ((assignStatement)s1).assignment!=null)
+							((assignStatement)s1).assignment = ((assignStatement)s1).assignment.replace_hole(iterator);
+						else if(s1.type.equals("ifStatement")){
+							((ifStatement)s1).replace_hole(iterator);
+						}
+					}
+				}
+				else{
+					System.out.println("statement not supported in ifStatement!");
+				}
+			}
+		}
+	
+	}
+	
 	public ArrayList<ArrayList<statement>> basicPath(HashMap<String, expression> globalVar){
 		ArrayList<statement> l;
 		ArrayList<statement> templ;
@@ -87,6 +121,7 @@ public class ifStatement extends statement{
 					if(!s.type.equals("forStatement"))
 						l.add(s);
 					else{
+						((forStatement)s).replace_hole();
 						ArrayList<statement> temps = ((forStatement)s).unroll(globalVar);
 						if(temps!=null){
 							for(int r=0; r<temps.size(); r++)
@@ -114,6 +149,7 @@ public class ifStatement extends statement{
 						if(!s.type.equals("forStatement"))
 							tempRet.get(k).add(s);
 						else{
+							((forStatement)s).replace_hole();
 							ArrayList<statement> temps = ((forStatement)s).unroll(globalVar);
 							if(temps!=null){
 								for(int r=0; r<temps.size(); r++)

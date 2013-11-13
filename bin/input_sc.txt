@@ -1,6 +1,6 @@
 program main [] = 
-	real N = 4;
-	real A = 6;
+	real N = 3;
+	real A = 3;
 	
 	mechanism m[list[] p][list[] result]=
 		list[] us;
@@ -9,7 +9,7 @@ program main [] =
 			 us[i] = 0;
 			for j=0 to N-1
 				do
-					us[i]= us[i] + $ c, j $ * p[j][i];
+					us[i]= us[i] + ? c * p[j][i];
 			end for
 		end for  
 		result = us;

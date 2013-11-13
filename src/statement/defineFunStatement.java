@@ -84,6 +84,7 @@ public class defineFunStatement extends statement{
         		if(!c.type.equals("forStatement"))
         			this.bp.get(0).add(c);
 				else{
+					((forStatement)c).replace_hole();
 					ArrayList<statement> temps = ((forStatement)c).unroll(tempglobalVar);
 					if(temps!=null){
 						for(int r=0; r<temps.size(); r++)
@@ -106,6 +107,7 @@ public class defineFunStatement extends statement{
         			}
             			
     				else{
+    					((forStatement)c).replace_hole();
     					ArrayList<statement> temps = ((forStatement)c).unroll(tempglobalVar);
     					for(int j=0; j< this.bp.size(); j++){
     						if(temps!=null){

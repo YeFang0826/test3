@@ -31,6 +31,7 @@ public class forStatement extends statement{
 			this.body.get(i).eval_0(globalVar);
 		}
 	}
+	
 	public ArrayList<statement> unroll(HashMap<String,expression> knownVar){
 		
 		ArrayList<statement> ret = null;
@@ -96,7 +97,39 @@ public class forStatement extends statement{
 		
 		return ret;
 	}
-
+	
+	public void replace_hole(){
+		
+		statement s;
+		for(int i=0; i<this.body.size(); i++){
+			s = this.body.get(i);
+			if(s.type.equals("defVarStatement") && ((defVarStatement)s).init!=null)
+				((defVarStatement)s).init = ((defVarStatement)s).init.replace_hole(this.iterator);
+			else if(s.type.equals("assignStatement") && ((assignStatement)s).assignment!=null)
+				((assignStatement)s).assignment = ((assignStatement)s).assignment.replace_hole(this.iterator);
+			else if(s.type.equals("ifStatement")){
+				((ifStatement)s).replace_hole(this.iterator);
+			}
+			else if(s.type.equals("forStatement")){
+				((forStatement)s).replace_hole();
+				statement s1;
+				for(int j=0; j<((forStatement)s).body.size();j++){
+					s1 = ((forStatement)s).body.get(j);
+					if(s1.type.equals("defVarStatement") && ((defVarStatement)s1).init!=null)
+						((defVarStatement)s1).init = ((defVarStatement)s1).init.replace_hole(this.iterator);
+					else if(s1.type.equals("assignStatement") && ((assignStatement)s1).assignment!=null)
+						((assignStatement)s1).assignment = ((assignStatement)s1).assignment.replace_hole(this.iterator);
+					else if(s1.type.equals("ifStatement")){
+						((ifStatement)s1).replace_hole(this.iterator);
+					}
+				}
+			}
+			else{
+				System.out.println("statement not supported in forloop!");
+			}
+		}
+		
+	}
 }
 
 
