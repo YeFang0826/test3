@@ -2,6 +2,7 @@ program main [] =
 	real N = 3;
 	real A = 3;
 	
+	@
 	mechanism m[list[] p][list[] result]=
 		list[] us;
 		for i=0 to A-1

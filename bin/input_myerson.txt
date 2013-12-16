@@ -9,8 +9,21 @@ program main [] =
 	  do 
 	  	price = price + ? c * p[i][1];
 	 end for
-	 tuple result = Tuple(winner, price);
+	 
+	 real reservePrice = 0.8 * p[0][2];
+	 real outprice = 0;
+		
+	 if(price >= reservePrice){
+		outprice = price;
+	 }
+	 else{
+		outprice = reservePrice;
+	 }
+	 
+	 result = Tuple(winner, outprice);
+	 
 	end m
+	
 	 
    agent ag= 
     	real v;
@@ -30,17 +43,21 @@ program main [] =
       for i = 0 to N-1
       	do 
       		a[i] = new ag(x, i);
-      		e[i] = Tuple(a[i].self, a[i].b);
+      		e[i] = Tuple(a[i].self, a[i].b, a[i].v);
       end for
       
       tuple return;
       return = m(e);
       
-     end execute
+    end execute
      
  end program main
  
- @ post : forall(i, 0, N), { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, 1.05*a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) } @
+ @ post : { forall(i, 0, N), 
+ { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, 1.05*a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) }}
+ 	and 
+ 	{ return[1]>= 0.8 * a[0].v}}
+ 	 @
       	  
     	
 	   

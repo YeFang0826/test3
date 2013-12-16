@@ -23,7 +23,7 @@ public class testSolver {
 	// the input formula is an intermediate result, so we can assume that there is no grammar in the input formula
 	// 1.(F) 2.Spaces only between and|or|implies|not 3.each singlton needs to be in parentheses. 
 	   
-	   Scanner sc= new Scanner(new File("src/input_positionA.txt"));
+	   Scanner sc= new Scanner(new File("src/input_vcg.txt"));
 		String input = "";
 		String temp;
 		while(sc.hasNext()){
@@ -83,16 +83,16 @@ public class testSolver {
 	 
 	   if(LPPs.size()>0){
 			 for(int i =0; i<LPPs.size(); i++){
-				 System.out.println("Sub-problem:"+i);
+				 //System.out.println("Sub-problem:"+i);
 				 if(sat(existVar,LPPs.get(i)).equals("SAT")){
 					 //System.out.println(sat(existVar,LPPs.get(i)));
 					 break;
 				 }
-				 System.out.println("========================================================");
+				// System.out.println("========================================================");
 		   }	   
 	   }  
    
-	   System.out.println("There are "+ LPPs.size()+ " subproblems.");
+	  // System.out.println("There are "+ LPPs.size()+ " subproblems.");
 	   
    }
    
@@ -205,8 +205,11 @@ public class testSolver {
 	   	s.Assert(f);
 	   Status ret = s.Check();
 	   
-	   		if (ret == Status.SATISFIABLE)
-	   			return "SAT";
+	   		if (ret == Status.SATISFIABLE){
+	   			Model m = s.Model();
+	   			return ("SAT\n" + m.toString());
+	   		}
+	   			
 	   		else if( ret == Status.UNKNOWN)
 	   			return "UNKNOWN";
 	   		else 
@@ -971,7 +974,7 @@ public class testSolver {
 		   boolean first2=true;
 		   
 		   for(int i =0; i<dnf.size();i++){
-			   System.out.println("LPP"+i);
+			  //System.out.println("LPP"+i);
 			   String[][] coefficients = new String[dnf.get(i).size()][forallVar.size() + 1];
 			   ArrayList<String> addvarTemp = new ArrayList<String>(dnf.get(i).size());	
 			   ArrayList<String> geq = new ArrayList<String>();
@@ -998,7 +1001,7 @@ public class testSolver {
 				   //System.out.print("{");
 				  if(dnf.get(i).get(j).singlton!=null){
 					  ineq = dnf.get(i).get(j).singlton;// get coefficient A&b
-					  System.out.println(ineq);
+					 // System.out.println(ineq);
 				    	  //================== change to <= | < b =================================//
 					  tempc="";
 					  boolean rhs = false;
@@ -1297,7 +1300,7 @@ public static void FarkerTranslation(ArrayList<ArrayList<formula>> dnf, ArrayLis
 					 		}
 						   
 						  // System.out.println();
-						  // System.out.println();
+						  ////.out.println();
 				    	  //================== constrains 1 =======================================//
 				    	  if(dnf.get(i).get(j).notNegated){
 							  if(ineq.indexOf('<')!=-1 && ineq.indexOf('=')==-1){
