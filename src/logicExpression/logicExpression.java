@@ -580,30 +580,54 @@ public class logicExpression {
 				
 				object left = this.l.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
 				object right = this.r.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
+				String l ="";
+				String r ="";
 				
-				if(left.type.equals("string") && right.type.equals("string")){
-					return new string("(" + ((string)left).s +" "+ this.operator +" "+ ((string)right).s + ")");
+				if(left.type.equals("string")) 
+					l = ((string)left).s;
+				if(left.type.equals("number"))
+					l = Double.toString(((number)left).n);
+				if(right.type.equals("string")) 
+					r = ((string)right).s;
+				if(right.type.equals("number"))
+					r = Double.toString(((number)right).n);
+				
+				if(left.type.equals("map")){
+						for(int k= 0; k<((map)left).m.size(); k++){
+							if(k==0)
+								l ="("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +")";
+							else
+								l = "("+ l + " and " +"("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +"))";
+						}
 				}
-				else if(left.type.equals("string") && right.type.equals("number")){
-					return new string("(" + ((string)left).s +" "+ this.operator +" "+ Double.toString(((number)right).n)+ ")");
+				if(right.type.equals("map")){
+					for(int k= 0; k<((map)right).m.size(); k++){
+						if(k==0)
+							r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
+						else
+							r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
+					}
 				}
-				else if(left.type.equals("number") && right.type.equals("string")){
-					return new string("(" + Double.toString(((number)left).n) +" "+ this.operator +" "+ ((string)right).s+ ")");
-				}
-				else if(left.type.equals("number") && right.type.equals("number")){
-					return new string("(" + Double.toString(((number)left).n) +" "+ this.operator +" "+ Double.toString(((number)right).n)+ ")");
-				}
-				else{
-					System.out.println("expression operation not supported right now in execution code");
-				}
+				
+				return new string("(" + l +" "+ this.operator +" "+ r + ")");
 			}
 			else if (this.r!=null && !this.operator.equals("")){
 				object right = this.r.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
+				String r="";
 				if(right.type.equals("string")){
 					return new string("(" + this.operator + ((string)right).s+ ")"); 
 				}
 				else if(right.type.equals("number")){
 					return new string("(" + this.operator + Double.toString(((number)right).n)+ ")"); 
+				}
+				else if(right.type.equals("map")){
+					for(int k= 0; k<((map)right).m.size(); k++){
+						if(k==0)
+							r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
+						else
+							r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
+					}
+					return new string("(" + this.operator + r + ")"); 
 				}
 			}
 			

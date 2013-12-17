@@ -23,7 +23,7 @@ public class testSolver {
 	// the input formula is an intermediate result, so we can assume that there is no grammar in the input formula
 	// 1.(F) 2.Spaces only between and|or|implies|not 3.each singlton needs to be in parentheses. 
 	   
-	   Scanner sc= new Scanner(new File("src/input_vcg.txt"));
+	   Scanner sc= new Scanner(new File("src/input_vcg_1.txt"));
 		String input = "";
 		String temp;
 		while(sc.hasNext()){

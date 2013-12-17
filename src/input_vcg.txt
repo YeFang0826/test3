@@ -40,7 +40,7 @@ program main [] =
      
  end program main
  
- @ post : forall(i, 0, N), { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, 1.05*a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) } @
+ @ post : forall(i, 0, N), { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) } @
       	  
     	
 	   
