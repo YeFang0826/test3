@@ -80,6 +80,17 @@ public class forStatement extends statement{
 						}
 						ret.add(news);
 					}
+					else if(s.type.equals("priorInfo")){
+						priorInfo news = null;
+						news = new priorInfo();
+						inputPrior x;
+						for(int k=0; k<((priorInfo)s).prior.size(); k++){
+							x = new inputPrior(((priorInfo)s).prior.get(k).name.eval_0(knownVar));
+							x.intervals = ((priorInfo)s).prior.get(k).intervals;
+							news.prior.add(x);
+						}
+						ret.add(news);
+					}
 					else if(s.type.equals("forStatement")){
 						ArrayList<statement> nested = ((forStatement)s).unroll(knownVar); // recursive call
 		
@@ -124,7 +135,7 @@ public class forStatement extends statement{
 					}
 				}
 			}
-			else{
+			else if(!s.type.equals("priorInfo")){
 				System.out.println("statement not supported in forloop!");
 			}
 		}

@@ -18,6 +18,7 @@ import statement.*;
 import term.expressionT;
 import term.functionCallT;
 import term.holeT;
+import term.inputPrior;
 import term.num;
 import term.sortedList;
 import term.var;
@@ -415,8 +416,9 @@ public class logicExpression {
 		this.f = this.qe(globalVar);
 	}
 	
+	// bug in precondition evaluation
 	public String pre_eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism,
-			ArrayList<String> existsVar, ArrayList<String> forallVar){
+			ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
 		if(this.f!=null){
 			String f1;
 			String f2;
@@ -425,101 +427,7 @@ public class logicExpression {
 			for(int i=0; i<this.f.size();i++){
 				f2="";
 				for(int j=0; j<this.f.get(i).size();j++){
-					r = this.f.get(i).get(j).pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-					f1=""; 
-					if(r.type.equals("map")){
-						for(int k= 0; k<((map)r).m.size(); k++){
-							if(k==0)
-								f1="("+ ((string)((map)r).m.keySet().toArray()[k]).s + " implies " + ((string)((map)r).m.values().toArray()[k]).s +")";
-							else
-								f1 = "("+f1 + " and " +"("+ ((string)((map)r).m.keySet().toArray()[k]).s + " implies " + ((string)((map)r).m.values().toArray()[k]).s +"))";
-						}
-					}
-					else
-						f1 = "("+((string)r).s+")";
-					
-					
-					if(j==0)
-						f2 = f1;
-					else
-						f2 = "("+f2 + " and " + f1+")";
-				}
-				if(i==0)
-					f3 = f2;
-				else
-					f3 = "("+f3 + " or " + f2+")";
-				
-			}
-			return f3;
-		}
-		else{
-			object r;
-			String f1="";
-			r = this.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-			if(r.type.equals("map")){
-				for(int k= 0; k<((map)r).m.size(); k++){
-					if(k==0)
-						f1="("+ ((string)((map)r).m.keySet().toArray()[k]).s + " implies " + ((string)((map)r).m.values().toArray()[k]).s +")";
-					else
-						f1 = "("+f1 + " and " +"("+ ((string)((map)r).m.keySet().toArray()[k]).s + " implies " + ((string)((map)r).m.values().toArray()[k]).s +"))";
-				}
-			}
-			else
-				f1 = ((string)r).s;
-			return f1;
-		}
-		
-		
-	}
-	
-	public object pre_eval_exesub(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism,
-			ArrayList<String> existsVar, ArrayList<String> forallVar){
-		object ret = null;
-		if(this.leaf!=null){
-			ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-		}
-		else if(this.l!=null && this.r != null){
-			object left = this.l.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-			object right = this.r.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-			if(left.type.equals("string") && right.type.equals("string")){
-				return new string(((string)left).s +" "+ this.operator +" "+ ((string)right).s);
-			}
-			else if(left.type.equals("string") && right.type.equals("number")){
-				return new string(((string)left).s +" "+ this.operator +" "+ Double.toString(((number)right).n));
-			}
-			else if(left.type.equals("number") && right.type.equals("string")){
-				return new string(Double.toString(((number)left).n) +" "+ this.operator +" "+ ((string)right).s);
-			}
-			else if(left.type.equals("number") && right.type.equals("number")){
-				return new string(Double.toString(((number)left).n) +" "+ this.operator +" "+ Double.toString(((number)right).n));
-			}
-			else{
-				System.out.println("expression operation not supported right now in execution code");
-			}
-		}
-		else if (this.r!=null && !this.operator.equals("")){
-			object right = this.r.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-			if(right.type.equals("string")){
-				return new string(this.operator + ((string)right).s); 
-			}
-			else if(right.type.equals("number")){
-				return new string(this.operator + Double.toString(((number)right).n)); 
-			}
-		}
-		return ret;
-	}
-	
-	public String post_eval_exe(HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, executeCode code, ArrayList<String> existsVar, ArrayList<String> forallVar){
-		
-		if(this.f!=null){
-			String f1;
-			String f2;
-			String f3="";
-			object r;
-			for(int i=0; i<this.f.size();i++){
-				f2="";
-				for(int j=0; j<this.f.get(i).size();j++){
-					r = this.f.get(i).get(j).post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
+					r = this.f.get(i).get(j).pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
 					f1=""; 
 					if(r.type.equals("map")){
 						for(int k= 0; k<((map)r).m.size(); k++){
@@ -549,7 +457,7 @@ public class logicExpression {
 		else{
 			object r;
 			String f1="";
-			r = this.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
+			r = this.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
 			if(r.type.equals("map")){
 				for(int k= 0; k<((map)r).m.size(); k++){
 					if(k==0)
@@ -566,74 +474,348 @@ public class logicExpression {
 		
 	}
 	
-	public object post_eval_exesub(HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, executeCode code,ArrayList<String> existsVar, ArrayList<String> forallVar){
-		
-		HashMap<String, object> knownVars;
-		object ret =null;
-		
-		for(int i=0; i<code.vars.size(); i++){
-			knownVars = (HashMap<String, object>)code.vars.values().toArray()[i];
-			if(this.leaf!=null){
-				ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+	public object pre_eval_exesub(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism,
+			ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
+		object ret = null;
+		if(this.leaf!=null){
+			ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
+		}
+		else if(this.l!=null && this.r != null){
+			object left = this.l.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
+			object right = this.r.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
+			if(left.type.equals("string") && right.type.equals("string")){
+				return new string(((string)left).s +" "+ this.operator +" "+ ((string)right).s);
 			}
-			else if(this.l!=null && this.r != null){
-				
-				object left = this.l.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
-				object right = this.r.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
-				String l ="";
-				String r ="";
-				
-				if(left.type.equals("string")) 
-					l = ((string)left).s;
-				if(left.type.equals("number"))
-					l = Double.toString(((number)left).n);
-				if(right.type.equals("string")) 
-					r = ((string)right).s;
-				if(right.type.equals("number"))
-					r = Double.toString(((number)right).n);
-				
-				if(left.type.equals("map")){
-						for(int k= 0; k<((map)left).m.size(); k++){
-							if(k==0)
-								l ="("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +")";
-							else
-								l = "("+ l + " and " +"("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +"))";
-						}
-				}
-				if(right.type.equals("map")){
-					for(int k= 0; k<((map)right).m.size(); k++){
-						if(k==0)
-							r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
-						else
-							r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
-					}
-				}
-				
-				return new string("(" + l +" "+ this.operator +" "+ r + ")");
+			else if(left.type.equals("string") && right.type.equals("number")){
+				return new string(((string)left).s +" "+ this.operator +" "+ Double.toString(((number)right).n));
 			}
-			else if (this.r!=null && !this.operator.equals("")){
-				object right = this.r.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar);
-				String r="";
-				if(right.type.equals("string")){
-					return new string("(" + this.operator + ((string)right).s+ ")"); 
-				}
-				else if(right.type.equals("number")){
-					return new string("(" + this.operator + Double.toString(((number)right).n)+ ")"); 
-				}
-				else if(right.type.equals("map")){
-					for(int k= 0; k<((map)right).m.size(); k++){
-						if(k==0)
-							r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
-						else
-							r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
-					}
-					return new string("(" + this.operator + r + ")"); 
-				}
+			else if(left.type.equals("number") && right.type.equals("string")){
+				return new string(Double.toString(((number)left).n) +" "+ this.operator +" "+ ((string)right).s);
 			}
-			
+			else if(left.type.equals("number") && right.type.equals("number")){
+				return new string(Double.toString(((number)left).n) +" "+ this.operator +" "+ Double.toString(((number)right).n));
+			}
+			else{
+				System.out.println("expression operation not supported right now in execution code");
+			}
+		}
+		else if (this.r!=null && !this.operator.equals("")){
+			object right = this.r.pre_eval_exesub(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
+			if(right.type.equals("string")){
+				return new string(this.operator + ((string)right).s); 
+			}
+			else if(right.type.equals("number")){
+				return new string(this.operator + Double.toString(((number)right).n)); 
+			}
 		}
 		return ret;
+	}
+	
+	
+	public String post_eval_exe(HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, 
+			executeCode code, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
+		String condition;
+		String f1;
+		String f2 ="";
+		for(int i=0; i<code.vars.size(); i++){
+			condition = ((string)(object) code.vars.keySet().toArray()[i]).s;
+			if(!condition.equals("false")){
+				f1 = post_eval_sub((HashMap<String, object>)code.vars.values().toArray()[i], agentTemplate, mechanism,existsVar, forallVar, prior_Info);
+				if(i==0){
+					if(condition.equals("true"))
+						f2 = f1;
+					else 
+						f2 = "("+ condition + " implies " + f1 + ")";
+				}
+					
+				else{
+					if(condition.equals("true"))
+						f2 = "(" + f2+ " and "+  f1 + ")";
+					else
+						f2 = "(" + f2+ " and ("+ condition + " implies " + f1 + "))";
+				}
+			}
+		}
+		
+		return f2;
+	}
+	public String post_eval_sub(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
+			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_info){
+		if(this.f.size()>0){
+			String f1;
+			String f2;
+			String f3="";
+	
+			for(int i=0; i<this.f.size();i++){
+				f2="";
+				for(int j=0; j<this.f.get(i).size();j++){
+					f1 = this.f.get(i).get(j).post_eval_sub_1_2(knownVars,agentTemplate, mechanism, existsVar, forallVar, prior_info);
+					
+					if(j==0)
+						f2 = f1;
+					else
+						f2 = "("+f2 + " and " + f1+")";
+				}
+				
+				if(i==0)
+					f3 = f2;
+				else
+					f3 = "("+f3 + " or " + f2+")";
+				
+			}
+			return f3;
+		}
+		else{
+			return this.post_eval_sub_1_2(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+		}
+	}
+	public String post_eval_sub_1(object condition, HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
+			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_info){
+		object ret = null;
+		
+		if(this.leaf!=null){
+			ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, false);
+			if(ret.type.equals("map")){
+				String s = "";
+				for(int k= 0; k<((map)ret).m.size(); k++){
+					if(k==0){
+						if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true") && ((string)condition).s.equals("true"))
+							s = ((string)((map)ret).m.values().toArray()[k]).s;
+						else if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true") || ((string)condition).s.contains(((string)((map)ret).m.keySet().toArray()[k]).s))
+							s="("+ ((string)condition).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +")";
+						else if(((string)((map)ret).m.keySet().toArray()[k]).s.contains(((string)condition).s))
+							s="("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +")";
+						else
+							s = "((" + ((string)condition).s + " and " + ((string)((map)ret).m.keySet().toArray()[k]).s+") implies "+ ((string)((map)ret).m.values().toArray()[k]).s +")";
+					}
+						
+					else{
+						if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true") && ((string)condition).s.equals("true"))
+							s = "("+ s + " and "+ ((string)((map)ret).m.values().toArray()[k]).s + ")";
+						else if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true") || ((string)condition).s.contains(((string)((map)ret).m.keySet().toArray()[k]).s))
+							s="("+ s + " and ("+ ((string)condition).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +"))";
+						else if(((string)((map)ret).m.keySet().toArray()[k]).s.contains(((string)condition).s))
+							s="("+ s + " and ("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +"))";
+						else
+							s = "("+ s + " and ((" + ((string)condition).s + " and " + ((string)((map)ret).m.keySet().toArray()[k]).s+") implies "+ ((string)((map)ret).m.values().toArray()[k]).s +"))";
+					}	
+				}
+				return s;
+			}
+			else if(ret.type.equals("string")){
+				if(((string)condition).s.equals("true"))
+					return ((string)ret).s;
+				else
+					return "(" + ((string)condition).s + " implies " + ((string)ret).s + ")";
+			}
+				
+			else if(ret.type.equals("number")){
+				if(((string)condition).s.equals("true"))
+					return Double.toString(((number)ret).n);
+				else
+					return "(" + ((string)condition).s + " implies " + Double.toString(((number)ret).n) + ")";
+			}
+			else {
+				System.out.println("logicExpression evaluation error!");
+			}
+				return null;
+		}
+		else if(this.l!=null && this.r != null){
+			
+			String left = this.l.post_eval_sub_1(condition, knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String right = this.r.post_eval_sub_1(condition, knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			
+			return "("+left +" "+ this.operator +" "+ right+")";
+		}
+		else if (this.r!=null && !this.operator.equals("")){
+			String right = this.r.post_eval_sub_1(condition, knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String r="";
+			
+			return "(" + this.operator + " "+right + ")"; 
+			
+		}
+		return null;
+	}
+	
+	public String post_eval_sub_1_2(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
+			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_info){
+		object ret = null;
+		
+		if(this.leaf!=null){
+			ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, false);
+			if(ret.type.equals("map")){
+				String s = "";
+				for(int k= 0; k<((map)ret).m.size(); k++){
+					if(k==0){
+						if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true"))
+							s = ((string)((map)ret).m.values().toArray()[k]).s;
+						else
+							s="("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +")";
+					}
+						
+					else{
+						if(((string)((map)ret).m.keySet().toArray()[k]).s.equals("true"))
+							s = "("+s + " and " +((string)((map)ret).m.values().toArray()[k]).s +")";
+						else
+							s = "("+s + " and " +"("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +"))";
+					}	
+				}
+				return s;
+			}
+			else if(ret.type.equals("string"))
+				return ((string)ret).s;
+			else if(ret.type.equals("number"))
+				return Double.toString(((number)ret).n);
+			else {
+				System.out.println("logicExpression evaluation error!");
+			}
+				return null;
+		}
+		else if(this.l!=null && this.r != null){
+			
+			String left = this.l.post_eval_sub_1_2(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String right = this.r.post_eval_sub_1_2(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			
+			return "("+left +" "+ this.operator +" "+ right+")";
+		}
+		else if (this.r!=null && !this.operator.equals("")){
+			String right = this.r.post_eval_sub_1_2(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String r="";
+			
+			return "(" + this.operator + " "+right + ")"; 
+			
+		}
+		return null;
+	}
+	
+/*	
+	public String post_eval_exe(HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, 
+			executeCode code, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
+		
+		if(this.f!=null){
+			String f1;
+			String f2;
+			String f3="";
+	
+			for(int i=0; i<this.f.size();i++){
+				f2="";
+				for(int j=0; j<this.f.get(i).size();j++){
+					f1 = this.f.get(i).get(j).post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar, prior_Info);
+					
+					if(j==0)
+						f2 = f1;
+					else
+						f2 = "("+f2 + " and " + f1+")";
+				}
+				if(i==0)
+					f3 = f2;
+				else
+					f3 = "("+f3 + " or " + f2+")";
+				
+			}
+			return f3;
+		}
+		else{
+			return  this.post_eval_exesub(agentTemplate, mechanism, code, existsVar, forallVar, prior_Info);
+		}
+		
 		
 	}
 	
+	public String post_eval_exesub(HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism,
+			executeCode code,ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
+		
+		HashMap<String, object> knownVars;
+		object ret;
+		String r="";
+		for(int i=0; i<code.vars.size(); i++){
+			knownVars = (HashMap<String, object>)code.vars.values().toArray()[i];
+			ret = this.post_eval_exesub_1(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
+			if(ret.type.equals("string")){
+				if(r.equals(""))
+					r = "("+ ((string) code.vars.keySet().toArray()[i]).s + " implies "+ ((string)ret).s+")";
+				else
+					r = "(" + r + " and ("+ ((string) code.vars.keySet().toArray()[i]).s + " implies "+ ((string)ret).s+"))";
+			}
+		}
+		return r;
+	}
+	
+	public object post_eval_exesub_1(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
+			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_info){
+		object ret = null;
+		
+		if(this.leaf!=null){
+			ret = this.leaf.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			if(ret.type.equals("map")){
+				String s = "";
+				for(int k= 0; k<((map)ret).m.size(); k++){
+					if(k==0)
+						s="("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +")";
+					else
+						s = "("+s + " and " +"("+ ((string)((map)ret).m.keySet().toArray()[k]).s + " implies " + ((string)((map)ret).m.values().toArray()[k]).s +"))";
+				}
+				return new string(s);
+			}
+			else 
+				return ret;
+		}
+		else if(this.l!=null && this.r != null){
+			
+			object left = this.l.post_eval_exesub_1(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			object right = this.r.post_eval_exesub_1(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String l ="";
+			String r ="";
+			
+			if(left.type.equals("string")) 
+				l = ((string)left).s;
+			if(left.type.equals("number"))
+				l = Double.toString(((number)left).n);
+			if(right.type.equals("string")) 
+				r = ((string)right).s;
+			if(right.type.equals("number"))
+				r = Double.toString(((number)right).n);
+			
+			if(left.type.equals("map")){
+					for(int k= 0; k<((map)left).m.size(); k++){
+						if(k==0)
+							l ="("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +")";
+						else
+							l = "("+ l + " and " +"("+ ((string)((map)left).m.keySet().toArray()[k]).s + " implies " + ((string)((map)left).m.values().toArray()[k]).s +"))";
+					}
+			}
+			if(right.type.equals("map")){
+				for(int k= 0; k<((map)right).m.size(); k++){
+					if(k==0)
+						r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
+					else
+						r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
+				}
+			}
+			
+			return new string("(" + l +" "+ this.operator +" "+ r + ")");
+		}
+		else if (this.r!=null && !this.operator.equals("")){
+			object right = this.r.post_eval_exesub_1(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info);
+			String r="";
+			if(right.type.equals("string")){
+				return new string("(" + this.operator + ((string)right).s+ ")"); 
+			}
+			else if(right.type.equals("number")){
+				return new string("(" + this.operator + Double.toString(((number)right).n)+ ")"); 
+			}
+			else if(right.type.equals("map")){
+				for(int k= 0; k<((map)right).m.size(); k++){
+					if(k==0)
+						r ="("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +")";
+					else
+						r = "("+ r + " and " +"("+ ((string)((map)right).m.keySet().toArray()[k]).s + " implies " + ((string)((map)right).m.values().toArray()[k]).s +"))";
+				}
+				return new string("(" + this.operator + r + ")"); 
+			}
+		}
+		
+		return ret;	
+	}
+	*/
 }

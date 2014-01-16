@@ -30,6 +30,7 @@ public class program {
 	public executeCode code;
 	public ArrayList<String> existsVar;
 	public ArrayList<String> forallVar;
+	public HashMap<String,Double> prior_info;
 	
 	public program(){
 		this.globalvar = new HashMap<String, expression>();
@@ -37,6 +38,7 @@ public class program {
 		this.agentTemplate = new HashMap<String, agentTemplate>();
 		this.existsVar = new ArrayList<String>();
 		this.forallVar = new ArrayList<String>();
+		this.prior_info = new HashMap<String, Double>();
 	}
 	
 	public void inputVar(ArrayList<parameter> in){
@@ -66,13 +68,21 @@ public class program {
 		// unrolling forStatement / straighten ifStatement 
 		
 		this.mechanism.basicPath(this.globalvar);
+		agentTemplate tempagent;
 		for(int i=0; i<this.agentTemplate.size(); i++){
-			((agentTemplate)this.agentTemplate.values().toArray()[i]).eval(this.globalvar, existsVar, forallVar);
+			tempagent = ((agentTemplate)this.agentTemplate.values().toArray()[i]);
+			tempagent.eval(this.globalvar, existsVar, forallVar);
+			/*
+			if(tempagent.funs.size()>0){
+				for(int j=0; j<tempagent.funs.size(); j++)
+					((defineFunStatement)tempagent.funs.values().toArray()[j]).basicPath(this.globalvar);
+			}
+			*/
 		}
-		this.code.basicPath(this.globalvar); // basic paths for functions
+		this.code.basicPath(this.globalvar); 
 		
 		// execution 
-		this.code.exe(this.globalvar, this.agentTemplate, this.mechanism,this.existsVar, this.forallVar); // knownVars, agent info
+		this.code.exe(this.globalvar, this.agentTemplate, this.mechanism,this.existsVar, this.forallVar, this.prior_info); // knownVars, agent info
 		
 	
 		/// varification / synthesis
@@ -80,7 +90,7 @@ public class program {
 		if(this.post!=null)
 			this.post.unroll(this.globalvar); // f for logic formulas
 		
-		String formula = this.post.post_eval_exe(agentTemplate, mechanism, this.code, this.existsVar, this.forallVar);
+		String formula = this.post.post_eval_exe(agentTemplate, mechanism, this.code, this.existsVar, this.forallVar, this.prior_info);
 		String quantifier = "";
 		for(int i=0; i<this.existsVar.size(); i++){
 			if(i==0)

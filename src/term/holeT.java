@@ -29,12 +29,12 @@ public class holeT extends term{
 	}
 
 	public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
-			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
+			defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){
 		String ret = this.name; 
 		//System.out.print(this.name+" ");
 		object temp = null;
 		for(int i=this.lable.size()-1; i>=0; i--){
-			temp = this.lable.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+			temp = this.lable.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, expected);
 			if(temp.type.equals("string")){
 				ret = ret + "_"+ ((string)temp).s;
 				//System.out.print(((string)temp).s + " ");

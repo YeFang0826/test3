@@ -6,6 +6,7 @@ import agent.agentTemplate;
 import object.*;
 import expression.expression;
 import statement.*;
+import term.inputPrior;
 
 
 /*
@@ -49,7 +50,7 @@ public class executeCode {
     	for(int i=0; i<this.s.size(); i++){
     		 c = this.s.get(i);
         	
-        	if(!this.hasIf && !c.type.equals("ifStatement")){
+    		  if(!this.hasIf && !c.type.equals("ifStatement")){
         		if(this.bp.size()==0){
         			ArrayList<statement> temp = new ArrayList<statement>();
         			this.bp.add(temp);
@@ -117,7 +118,8 @@ public class executeCode {
     }
 	
 
-	public void exe(HashMap<String, expression> globalVar, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
+	public void exe(HashMap<String, expression> globalVar, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, 
+			ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info){
 		// return statement is the value to return
 		
 		HashMap<String, object> knownVars = null; 
@@ -130,7 +132,7 @@ public class executeCode {
     	for(int i=0; i<this.bp.size(); i++){
     		knownVars = new HashMap<String, object>();
     		for(int j= 0; j<globalVar.size(); j++){
-    			knownVars.put((String)globalVar.keySet().toArray()[j], ((expression)globalVar.values().toArray()[i]).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar));
+    			knownVars.put((String)globalVar.keySet().toArray()[j], ((expression)globalVar.values().toArray()[i]).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false));
     		}
     		
     		hasMap = false;
@@ -140,10 +142,33 @@ public class executeCode {
     			
     			s = this.bp.get(i).get(j);
     			
-    			if(s.type.equals("defVarStatement")){
+    			if(s.type.equals("priorInfo")){
+    				object lhs;
+    				if(!hasMap){
+    					for(int k=0; k<((priorInfo)s).prior.size(); k++){ // store prior info
+    						lhs = ((priorInfo)s).prior.get(k).name.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
+    						if(lhs.type.equals("string")){
+    							double expected_value =0;
+    							for(int l=0; l<((priorInfo)s).prior.get(k).intervals.size(); l= l+3)
+    								expected_value = expected_value 
+    									+ (((priorInfo)s).prior.get(k).intervals.get(l) + ((priorInfo)s).prior.get(k).intervals.get(l+1))*((priorInfo)s).prior.get(k).intervals.get(l+2)/2;
+ 
+    							prior_Info.put(((string)lhs).s, expected_value);
+    						}
+    						else
+    							System.out.println("prior info parameter is not defined.");
+    					}
+    				}
+    				else{
+    					System.out.println("map is not supported in prior info");
+    				}
+    				
+    			}
+    			
+    			else if(s.type.equals("defVarStatement")){
     				
     				if(((defVarStatement)s).init!= null){
-    					e = ((defVarStatement)s).init.eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar);
+    					e = ((defVarStatement)s).init.eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
     				}
     				else {
     					if(((defVarStatement)s).vType.equals("tuple")){
@@ -215,7 +240,7 @@ public class executeCode {
     				}
     			}
     			else if(s.type.equals("assignStatement")){
-    				 e = ((assignStatement)s).assignment.eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar);
+    				 e = ((assignStatement)s).assignment.eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
     				
     				if(((assignStatement)s).name!=null && ((assignStatement)s).assignment!= null){
         			
@@ -289,7 +314,7 @@ public class executeCode {
         						object temptl = knownVars.get(name);
         						object x;
         						if(temptl.type.equals("tuple")){
-        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar);
+        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars,agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
         							if(x.type.equals("number")){
         								((tuple)temptl).t.add(e);
         							}
@@ -297,7 +322,7 @@ public class executeCode {
         						else if(temptl.type.equals("list")){
         							object lhs = (list)temptl;
         							for(int k=0; k<((assignStatement)s).lhs.indexes.size(); k++){
-            							x = ((assignStatement)s).lhs.indexes.get(k).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(k).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
             							if(lhs.type.equals("tuple")){
             								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
             									((tuple)lhs).t.remove((int)((number)x).n);
@@ -349,7 +374,7 @@ public class executeCode {
             						object temptl = tempv.get(name);
             						object x;
             						if(temptl.type.equals("tuple")){
-            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(tempv,agentTemplate, mechanism, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(tempv,agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
             							if(x.type.equals("number")){
             								((tuple)temptl).t.add((object)tempm.values().toArray()[k]);
             							}
@@ -357,7 +382,7 @@ public class executeCode {
             						else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
             							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
-                							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar);
+                							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
                 							if(lhs.type.equals("tuple")){
                 								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
                 									((tuple)lhs).t.remove((int)((number)x).n);
@@ -394,7 +419,7 @@ public class executeCode {
         					for(int k=0; k<knownVarMap.size(); k++){
         						temptl = ((HashMap<String, object>)knownVarMap.values().toArray()[k]).get(name);
         						if(temptl.type.equals("tuple")){
-        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)knownVarMap.values().toArray()[k],agentTemplate, mechanism, existsVar, forallVar);
+        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)knownVarMap.values().toArray()[k],agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
         							if(x.type.equals("number")){
         								((tuple)temptl).t.add(e);
         							}
@@ -402,7 +427,7 @@ public class executeCode {
         						else if(temptl.type.equals("list")){
         							object lhs = (list)temptl;
         							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
-            							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe((HashMap<String, object>)knownVarMap.values().toArray()[k], agentTemplate, mechanism, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe((HashMap<String, object>)knownVarMap.values().toArray()[k], agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
             							if(lhs.type.equals("tuple")){
             								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
             									((tuple)lhs).t.remove((int)((number)x).n);
@@ -455,7 +480,7 @@ public class executeCode {
             						}
         							temptl = tempv.get(name);
         							if(temptl.type.equals("tuple")){
-            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
             							if(x.type.equals("number")){
             								((tuple)temptl).t.add(e);
             							}
@@ -463,7 +488,7 @@ public class executeCode {
         							else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
             							for(int n=0; n<((assignStatement)s).lhs.indexes.size(); n++){
-                							x = ((assignStatement)s).lhs.indexes.get(n).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar);
+                							x = ((assignStatement)s).lhs.indexes.get(n).eval_exe(tempv, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
                 							if(lhs.type.equals("tuple")){
                 								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
                 									((tuple)lhs).t.remove((int)((number)x).n);
@@ -502,7 +527,7 @@ public class executeCode {
     				if(!hasMap){
     					hasMap = true;
     					knownVarMap = new HashMap<object, HashMap<String, object>>();
-    					e = ((assumeStatement)s).e.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+    					e = ((assumeStatement)s).e.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
     					if(!e.type.equals("map")){
     						knownVarMap.put(e, knownVars);
     					}
@@ -531,7 +556,7 @@ public class executeCode {
 						
 						for(int k=0; k< knownVarMap.size();k++){
 							
-							e = ((assumeStatement)s).e.eval_exe((HashMap<String, object>) knownVarMap.values().toArray()[k], agentTemplate, mechanism, existsVar, forallVar);
+							e = ((assumeStatement)s).e.eval_exe((HashMap<String, object>) knownVarMap.values().toArray()[k], agentTemplate, mechanism, existsVar, forallVar, prior_Info, false);
 							string condition = null;
 	    					if(e.type.equals("expression")){
 	    						condition = new string("("+((string)e).s +" and " + ((string)knownVarMap.keySet().toArray()[k]).s + ")"); 

@@ -67,6 +67,25 @@ statement returns [statement statement]:
           | ifStatement { $statement = $ifStatement.ifStatement; }
           | forStatement { $statement = $forStatement.forStatement; }
           | defineFunStatement { $statement = $defineFunStatement.defineFunStatement; }
+          | priorInfoStatement { $statement = $priorInfoStatement.priorInfo; }
+          ;
+priorInfoStatement returns [priorInfo priorInfo]:
+          PRIOR_INFO ':' { $priorInfo = new priorInfo(); inputPrior x = null;}
+          ( op1 = expr { x = new inputPrior($op1.expr); }
+           '~' '[' 
+           lower1 = NUMERIC ',' upper1 = NUMERIC ',' pr1 = NUMERIC 
+           { x.intervals.add(Double.parseDouble($lower1.text));
+             x.intervals.add(Double.parseDouble($upper1.text));
+             x.intervals.add(Double.parseDouble($pr1.text)); }
+             
+           (';' lower2 = NUMERIC ',' upper2 = NUMERIC ',' pr2 =NUMERIC
+           { x.intervals.add(Double.parseDouble($lower2.text));
+             x.intervals.add(Double.parseDouble($upper2.text));
+             x.intervals.add(Double.parseDouble($pr2.text)); }
+            )*
+          ']'{ $priorInfo.prior.add(x); }
+          )+
+          ';'
           ;
 defineFunStatement returns [defineFunStatement defineFunStatement]: 
                      { boolean hasPre = false;}
@@ -136,6 +155,8 @@ ifStatement returns [ifStatement ifStatement]:
              (ELSE { ArrayList<statement> temp3 = new ArrayList<statement>(1); }  
              ( s3=statement { temp3.add($s3.statement); } )+  
              { $ifStatement.addElse(temp3); } )?
+             
+             END IF
        ;
               
 forStatement returns [forStatement forStatement]: 
@@ -413,6 +434,7 @@ term returns [term term]:
       | functionCall { $term = new functionCallT($functionCall.functionCall); } 
       | setExclude   { $term = $setExclude.setExclude; }
       | sortedList   { $term = $sortedList.sortedList; }
+      | expectedValue { $term = $expectedValue.expectedValue; }
       ;
 sortedList returns [ sortedList sortedList]:
         SORTED  '('ID { sortedList lassertion = new sortedList($ID.text);  }
@@ -430,6 +452,7 @@ functionCall returns [functionCall functionCall]:
         |
         listOperation { $functionCall = $listOperation.listOperation; }
         ;
+        
 tupleOperation returns [tupleCall tupleOperation]:
         'size' '(' expr ')'
         { $tupleOperation = new tupleCall("size"); $tupleOperation.input($expr.expr); }
@@ -438,6 +461,7 @@ tupleOperation returns [tupleCall tupleOperation]:
         '('op1 = expr { $tupleOperation.input($op1.expr); }
         (',' op2 = expr { $tupleOperation.input($op2.expr); } )* ')'
         ;
+        
 listOperation returns [listCall listOperation]:
         'length' '(' expr ')' 
         { $listOperation = new listCall("length"); $listOperation.input($expr.expr); }
@@ -497,6 +521,11 @@ ctype returns [String type, int dimension]:
         { $dimension = d;}
       ;
 
+expectedValue returns [expectedValue expectedValue]: 
+           EXPECTED '(' expr ')' { $expectedValue = new expectedValue($expr.expr); }
+           ;
+    
+
 //type
 REAL: 'real';
 CONST: 'const';
@@ -541,6 +570,8 @@ MECHANISM: 'mechanism';
 AGENT: 'agent';
 NEW: 'new';
 VAR: 'var';
+EXPECTED: 'expected';
+PRIOR_INFO: 'prior_Info';
 MULTI_COMMENTS: '/*' .* '*/'  { $channel = HIDDEN; };     
 COMMENTS: '//' .* ('\n'|'\r')  { $channel = HIDDEN; };
 NUMERIC: ('0'..'9')+ (|('.'(('0'..'9')+))); 

@@ -63,6 +63,7 @@ public class defineFunStatement extends statement{
     
     public void basicPath(HashMap<String, expression> globalVar){
     	HashMap<String, expression> tempglobalVar = new HashMap<String, expression>();
+    	ArrayList<statement> basicpath = new ArrayList<statement>();
 		for(int i=0 ; i<globalVar.size(); i++)
 			tempglobalVar.put((String)globalVar.keySet().toArray()[i], (expression)globalVar.values().toArray()[i]);
 		
@@ -76,27 +77,29 @@ public class defineFunStatement extends statement{
     		 c = this.code.get(i);
         	
         	if(!this.hasIf && !c.type.equals("ifStatement")){
-        		if(this.bp.size()==0){
-        			ArrayList<statement> temp = new ArrayList<statement>();
-        			this.bp.add(temp);
-        		}
-        	
+        		
         		if(!c.type.equals("forStatement"))
-        			this.bp.get(0).add(c);
+        			basicpath.add(c);
 				else{
 					((forStatement)c).replace_hole();
 					ArrayList<statement> temps = ((forStatement)c).unroll(tempglobalVar);
 					if(temps!=null){
 						for(int r=0; r<temps.size(); r++)
-							this.bp.get(0).add(temps.get(r));
+							basicpath.add(temps.get(r));
 					}
 				}
         	}
         	else if(!this.hasIf && c.type.equals("ifStatement")){
         		this.hasIf = true;
         		ArrayList<ArrayList<statement>> tempbp = ((ifStatement)c).basicPath(tempglobalVar);
-        		for(int j=0; j< tempbp.size(); j++){
-        			this.bp.add(tempbp.get(j));
+        		ArrayList<statement> temp_basicpath;
+        		for(int j=0; j<tempbp.size(); j++){
+        			temp_basicpath = new ArrayList<statement>();
+        			for(int k=0; k<basicpath.size(); k++)
+        				temp_basicpath.add(basicpath.get(k));
+        			for(int k=0; k<tempbp.get(j).size(); k++)
+        				temp_basicpath.add(tempbp.get(j).get(k));
+        			this.bp.add(temp_basicpath);
         		}
         	}
         	else if(this.hasIf && !c.type.equals("ifStatement")){
@@ -116,7 +119,6 @@ public class defineFunStatement extends statement{
     						}
     					}
     				}
-        		
         	}
         	
         	else{
@@ -139,10 +141,12 @@ public class defineFunStatement extends statement{
         		this.bp = templ;
         	}
     	}
+    	if(!this.hasIf)
+    		this.bp.add(basicpath);
     }
    
     public object eval_exe(HashMap<String, agentTemplate> agentTemplate, 
-    		defineFunStatement mechanism, ArrayList<object> in, ArrayList<String> existsVar, ArrayList<String> forallVar){ // f(rv, inputs)
+    		defineFunStatement mechanism, ArrayList<object> in, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){ // f(rv, inputs)
     	
     	HashMap<String, object> knownVars = null; 
     	statement s;
@@ -164,7 +168,7 @@ public class defineFunStatement extends statement{
     		object e=null;
     		String precondition = null;
     		if(this.pre!=null){
-    			precondition = this.pre.pre_eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+    			precondition = this.pre.pre_eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info);
     			hasMap = true;
     			ret = new HashMap<object, HashMap<String, object>>();
     			ret.put(new string(precondition), knownVars);
@@ -177,7 +181,7 @@ public class defineFunStatement extends statement{
     			if(s.type.equals("defVarStatement")){
     				
     				if(((defVarStatement)s).init!= null){
-    					e = ((defVarStatement)s).init.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+    					e = ((defVarStatement)s).init.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
     				}
     				else {
     					if(((defVarStatement)s).vType.equals("tuple")){
@@ -249,7 +253,7 @@ public class defineFunStatement extends statement{
     				}
     			}
     			else if(s.type.equals("assignStatement")){
-    				 e = ((assignStatement)s).assignment.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+    				 e = ((assignStatement)s).assignment.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
     				
     				if(((assignStatement)s).name!=null && ((assignStatement)s).assignment!= null){
         			
@@ -323,7 +327,7 @@ public class defineFunStatement extends statement{
         						object temptl = knownVars.get(name);
         						object x;
         						if(temptl.type.equals("tuple")){
-        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
         							if(x.type.equals("number")){
         								((tuple)temptl).t.add(e);
         							}
@@ -331,7 +335,7 @@ public class defineFunStatement extends statement{
         						else if(temptl.type.equals("list")){
         							object lhs = (list)temptl;
         							for(int k=0; k<((assignStatement)s).lhs.indexes.size(); k++){
-            							x = ((assignStatement)s).lhs.indexes.get(k).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(k).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
             							if(lhs.type.equals("tuple")){
             								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
             									((tuple)lhs).t.remove((int)((number)x).n);
@@ -385,7 +389,7 @@ public class defineFunStatement extends statement{
             						object temptl = tempv.get(name);
             						object x;
             						if(temptl.type.equals("tuple")){
-            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
             							if(x.type.equals("number")){
             								((tuple)temptl).t.add((object)tempm.values().toArray()[k]);
             							}
@@ -394,7 +398,7 @@ public class defineFunStatement extends statement{
             						else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
             							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
-                							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+                							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
                 							if(lhs.type.equals("tuple")){
                 								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
                 									((tuple)lhs).t.remove((int)((number)x).n);
@@ -434,7 +438,7 @@ public class defineFunStatement extends statement{
         					for(int k=0; k<ret.size(); k++){
         						temptl = ((HashMap<String, object>)ret.values().toArray()[k]).get(name);
         						if(temptl.type.equals("tuple")){
-        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)ret.values().toArray()[k], agentTemplate, this, existsVar, forallVar);
+        							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)ret.values().toArray()[k], agentTemplate, this, existsVar, forallVar, prior_Info, expected);
         							if(x.type.equals("number")){
         								((tuple)temptl).t.add(e);
         							}
@@ -442,7 +446,7 @@ public class defineFunStatement extends statement{
         						else if(temptl.type.equals("list")){
         							object lhs = (list)temptl;
         							for(int m=0; m<((assignStatement)s).lhs.indexes.size(); m++){
-            							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(m).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected );
             							if(lhs.type.equals("tuple")){
             								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
             									((tuple)lhs).t.remove((int)((number)x).n);
@@ -497,7 +501,7 @@ public class defineFunStatement extends statement{
             						}
         							temptl = tempv.get(name);
         							if(temptl.type.equals("tuple")){
-            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)ret.values().toArray()[k], agentTemplate, this, existsVar, forallVar);
+            							x = ((assignStatement)s).lhs.indexes.get(0).eval_exe((HashMap<String, object>)ret.values().toArray()[k], agentTemplate, this, existsVar, forallVar, prior_Info, expected);
             							if(x.type.equals("number")){
             								((tuple)temptl).t.add(e);
             							}
@@ -505,7 +509,7 @@ public class defineFunStatement extends statement{
         							else if(temptl.type.equals("list")){
             							object lhs = (list)temptl;
             							for(int n=0; n<((assignStatement)s).lhs.indexes.size(); n++){
-                							x = ((assignStatement)s).lhs.indexes.get(n).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+                							x = ((assignStatement)s).lhs.indexes.get(n).eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
                 							if(lhs.type.equals("tuple")){
                 								if(((tuple)lhs).t.size() == ((int)((number)x).n+1)){
                 									((tuple)lhs).t.remove((int)((number)x).n);
@@ -546,7 +550,7 @@ public class defineFunStatement extends statement{
     				if(!hasMap){
     					hasMap = true;
     					ret = new HashMap<object, HashMap<String, object>>();
-    					e = ((assumeStatement)s).e.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar);
+    					e = ((assumeStatement)s).e.eval_exe(knownVars, agentTemplate, this, existsVar, forallVar, prior_Info, expected);
     					if(!e.type.equals("map")){
     						ret.put(e, knownVars);
     					}
@@ -564,7 +568,7 @@ public class defineFunStatement extends statement{
         							else
         								tempv.put((String)knownVars.keySet().toArray()[m], (object)knownVars.values().toArray()[m]);
 								}
-								string condition = new string("(" + ((string)((map)e).m.keySet().toArray()[k]).s + " and " + ((string)((map)e).m.values().toArray()[k]).s + ")"); 
+								string condition = new string(get_condition(((string)((map)e).m.keySet().toArray()[k]).s,((string)((map)e).m.values().toArray()[k]).s)); 
 								ret.put(condition, tempv);  
 							}
     						
@@ -577,12 +581,14 @@ public class defineFunStatement extends statement{
 						
 						for(int k=0; k< ret.size();k++){
 							
-							e = ((assumeStatement)s).e.eval_exe(((HashMap<String, object>) ret.values().toArray()[k]), agentTemplate,this, existsVar, forallVar);
+							e = ((assumeStatement)s).e.eval_exe(((HashMap<String, object>) ret.values().toArray()[k]), agentTemplate,this, existsVar, forallVar, prior_Info, expected);
 							string condition = null;
+							HashMap<String, object> consq;
 	    					if(!e.type.equals("map")){
-	    						condition = new string("(" + ((string)ret.keySet().toArray()[k]).s + " and " + ((string)e).s + ")");
-	    						ret.put(condition, ((HashMap<String, object>)ret.values().toArray()[k]));
+	    						condition = new string(get_condition(((string)ret.keySet().toArray()[k]).s,((string)e).s));
+	    						consq = ((HashMap<String, object>)ret.values().toArray()[k]);
 	    						ret.remove((object)ret.keySet().toArray()[k]);
+	    						ret.put(condition, consq);
 	    					}
 	    					
 	    					else if(e.type.equals("map")){
@@ -602,8 +608,8 @@ public class defineFunStatement extends statement{
             							else
             								addv.put((String)tempv.keySet().toArray()[n], (object)tempv.values().toArray()[n]);
     								}
-    								condition = new string("(("+((string)ret.keySet().toArray()[k]).s + " and " + ((string)((map)e).m.keySet().toArray()[k]).s 
-    										+ ") and (" + ((string)((map)e).m.values().toArray()[k]).s+"))");
+    								condition = new string(get_condition(((string)ret.keySet().toArray()[k]).s, 
+    															get_condition( ((string)((map)e).m.keySet().toArray()[k]).s,((string)((map)e).m.values().toArray()[k]).s)));
         							newret.put(condition, addv);
     							}
 							}
@@ -640,6 +646,28 @@ public class defineFunStatement extends statement{
 			return (object)out.values().toArray()[0];
 		else
 			return new map(out);
+    }
+   
+    
+    public String get_condition(String c1, String c2){
+    	if(c1.equals("true")){
+    		if(c2.equals("true"))
+    			return "true";
+    		else if(!c2.equals("false"))
+    			return c2;
+    		else
+    			return "false";
+    	}
+    	else if(c2.equals("true")){
+    		if(!c1.equals("false"))
+    			return c1;
+    		else
+    			return "false";
+    	}
+    	else if(c1.equals("false") || c2.equals("false"))
+    		return "false";
+    	else
+    		return "("+c1 + " and "+c2 + ")";
     }
     
    

@@ -1,4 +1,4 @@
-// $ANTLR 3.5 /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g 2013-12-17 15:08:38
+// $ANTLR 3.5 /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g 2014-01-02 13:30:58
 
   package rules;
   import java.util.*;
@@ -12,8 +12,6 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class progLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int T__43=43;
-	public static final int T__44=44;
 	public static final int T__45=45;
 	public static final int T__46=46;
 	public static final int T__47=47;
@@ -40,6 +38,8 @@ public class progLexer extends Lexer {
 	public static final int T__68=68;
 	public static final int T__69=69;
 	public static final int T__70=70;
+	public static final int T__71=71;
+	public static final int T__72=72;
 	public static final int AGENT=4;
 	public static final int AND=5;
 	public static final int ANNOTATION=6;
@@ -52,33 +52,35 @@ public class progLexer extends Lexer {
 	public static final int END=13;
 	public static final int EXECUTE=14;
 	public static final int EXISTS=15;
-	public static final int FOR=16;
-	public static final int FORALL=17;
-	public static final int FUN=18;
-	public static final int ID=19;
-	public static final int IF=20;
-	public static final int IMPLIES=21;
-	public static final int LIST=22;
-	public static final int LISTTYPE=23;
-	public static final int MECHANISM=24;
-	public static final int MOD=25;
-	public static final int MULTI_COMMENTS=26;
-	public static final int NEW=27;
-	public static final int NOT=28;
-	public static final int NUMERIC=29;
-	public static final int OR=30;
-	public static final int POST=31;
-	public static final int PRE=32;
-	public static final int PROGRAM=33;
-	public static final int REAL=34;
-	public static final int SORTED=35;
-	public static final int TEMPLATE=36;
-	public static final int THEN=37;
-	public static final int TO=38;
-	public static final int TUPLE=39;
-	public static final int TUPLETYPE=40;
-	public static final int VAR=41;
-	public static final int WS=42;
+	public static final int EXPECTED=16;
+	public static final int FOR=17;
+	public static final int FORALL=18;
+	public static final int FUN=19;
+	public static final int ID=20;
+	public static final int IF=21;
+	public static final int IMPLIES=22;
+	public static final int LIST=23;
+	public static final int LISTTYPE=24;
+	public static final int MECHANISM=25;
+	public static final int MOD=26;
+	public static final int MULTI_COMMENTS=27;
+	public static final int NEW=28;
+	public static final int NOT=29;
+	public static final int NUMERIC=30;
+	public static final int OR=31;
+	public static final int POST=32;
+	public static final int PRE=33;
+	public static final int PRIOR_INFO=34;
+	public static final int PROGRAM=35;
+	public static final int REAL=36;
+	public static final int SORTED=37;
+	public static final int TEMPLATE=38;
+	public static final int THEN=39;
+	public static final int TO=40;
+	public static final int TUPLE=41;
+	public static final int TUPLETYPE=42;
+	public static final int VAR=43;
+	public static final int WS=44;
 
 	// delegates
 	// delegators
@@ -95,57 +97,16 @@ public class progLexer extends Lexer {
 	}
 	@Override public String getGrammarFileName() { return "/Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g"; }
 
-	// $ANTLR start "T__43"
-	public final void mT__43() throws RecognitionException {
+	// $ANTLR start "T__45"
+	public final void mT__45() throws RecognitionException {
 		try {
-			int _type = T__43;
+			int _type = T__45;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
 			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:12:7: ( '!=' )
 			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:12:9: '!='
 			{
 			match("!="); 
 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__43"
-
-	// $ANTLR start "T__44"
-	public final void mT__44() throws RecognitionException {
-		try {
-			int _type = T__44;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:13:7: ( '&&' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:13:9: '&&'
-			{
-			match("&&"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__44"
-
-	// $ANTLR start "T__45"
-	public final void mT__45() throws RecognitionException {
-		try {
-			int _type = T__45;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:14:7: ( '(' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:14:9: '('
-			{
-			match('('); 
 			}
 
 			state.type = _type;
@@ -162,10 +123,11 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__46;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:15:7: ( ')' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:15:9: ')'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:13:7: ( '&&' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:13:9: '&&'
 			{
-			match(')'); 
+			match("&&"); 
+
 			}
 
 			state.type = _type;
@@ -182,10 +144,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__47;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:16:7: ( '*' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:16:9: '*'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:14:7: ( '(' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:14:9: '('
 			{
-			match('*'); 
+			match('('); 
 			}
 
 			state.type = _type;
@@ -202,10 +164,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__48;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:17:7: ( '+' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:17:9: '+'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:15:7: ( ')' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:15:9: ')'
 			{
-			match('+'); 
+			match(')'); 
 			}
 
 			state.type = _type;
@@ -222,10 +184,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__49;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:18:7: ( ',' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:18:9: ','
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:16:7: ( '*' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:16:9: '*'
 			{
-			match(','); 
+			match('*'); 
 			}
 
 			state.type = _type;
@@ -242,10 +204,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__50;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:19:7: ( '-' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:19:9: '-'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:17:7: ( '+' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:17:9: '+'
 			{
-			match('-'); 
+			match('+'); 
 			}
 
 			state.type = _type;
@@ -262,10 +224,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__51;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:20:7: ( '.' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:20:9: '.'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:18:7: ( ',' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:18:9: ','
 			{
-			match('.'); 
+			match(','); 
 			}
 
 			state.type = _type;
@@ -282,10 +244,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__52;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:21:7: ( ':' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:21:9: ':'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:19:7: ( '-' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:19:9: '-'
 			{
-			match(':'); 
+			match('-'); 
 			}
 
 			state.type = _type;
@@ -302,10 +264,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__53;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:22:7: ( ';' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:22:9: ';'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:20:7: ( '.' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:20:9: '.'
 			{
-			match(';'); 
+			match('.'); 
 			}
 
 			state.type = _type;
@@ -322,10 +284,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__54;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:23:7: ( '<' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:23:9: '<'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:21:7: ( ':' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:21:9: ':'
 			{
-			match('<'); 
+			match(':'); 
 			}
 
 			state.type = _type;
@@ -342,11 +304,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__55;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:24:7: ( '<=' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:24:9: '<='
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:22:7: ( ';' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:22:9: ';'
 			{
-			match("<="); 
-
+			match(';'); 
 			}
 
 			state.type = _type;
@@ -363,10 +324,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__56;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:25:7: ( '=' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:25:9: '='
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:23:7: ( '<' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:23:9: '<'
 			{
-			match('='); 
+			match('<'); 
 			}
 
 			state.type = _type;
@@ -383,10 +344,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__57;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:26:7: ( '==' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:26:9: '=='
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:24:7: ( '<=' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:24:9: '<='
 			{
-			match("=="); 
+			match("<="); 
 
 			}
 
@@ -404,10 +365,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__58;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:27:7: ( '>' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:27:9: '>'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:25:7: ( '=' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:25:9: '='
 			{
-			match('>'); 
+			match('='); 
 			}
 
 			state.type = _type;
@@ -424,10 +385,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__59;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:28:7: ( '>=' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:28:9: '>='
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:26:7: ( '==' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:26:9: '=='
 			{
-			match(">="); 
+			match("=="); 
 
 			}
 
@@ -445,10 +406,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__60;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:29:7: ( '?' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:29:9: '?'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:27:7: ( '>' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:27:9: '>'
 			{
-			match('?'); 
+			match('>'); 
 			}
 
 			state.type = _type;
@@ -465,10 +426,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__61;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:30:7: ( 'InsertSorted' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:30:9: 'InsertSorted'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:28:7: ( '>=' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:28:9: '>='
 			{
-			match("InsertSorted"); 
+			match(">="); 
 
 			}
 
@@ -486,10 +447,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__62;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:31:7: ( '[' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:31:9: '['
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:29:7: ( '?' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:29:9: '?'
 			{
-			match('['); 
+			match('?'); 
 			}
 
 			state.type = _type;
@@ -506,10 +467,11 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__63;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:32:7: ( ']' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:32:9: ']'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:30:7: ( 'InsertSorted' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:30:9: 'InsertSorted'
 			{
-			match(']'); 
+			match("InsertSorted"); 
+
 			}
 
 			state.type = _type;
@@ -526,11 +488,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__64;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:33:7: ( 'length' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:33:9: 'length'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:31:7: ( '[' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:31:9: '['
 			{
-			match("length"); 
-
+			match('['); 
 			}
 
 			state.type = _type;
@@ -547,11 +508,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__65;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:34:7: ( 'setExclude' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:34:9: 'setExclude'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:32:7: ( ']' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:32:9: ']'
 			{
-			match("setExclude"); 
-
+			match(']'); 
 			}
 
 			state.type = _type;
@@ -568,10 +528,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__66;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:35:7: ( 'size' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:35:9: 'size'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:33:7: ( 'length' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:33:9: 'length'
 			{
-			match("size"); 
+			match("length"); 
 
 			}
 
@@ -589,10 +549,11 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__67;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:36:7: ( '{' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:36:9: '{'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:34:7: ( 'setExclude' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:34:9: 'setExclude'
 			{
-			match('{'); 
+			match("setExclude"); 
+
 			}
 
 			state.type = _type;
@@ -609,10 +570,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__68;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:37:7: ( '||' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:37:9: '||'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:35:7: ( 'size' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:35:9: 'size'
 			{
-			match("||"); 
+			match("size"); 
 
 			}
 
@@ -630,10 +591,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__69;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:38:7: ( '}' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:38:9: '}'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:36:7: ( '{' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:36:9: '{'
 			{
-			match('}'); 
+			match('{'); 
 			}
 
 			state.type = _type;
@@ -650,6 +611,47 @@ public class progLexer extends Lexer {
 		try {
 			int _type = T__70;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:37:7: ( '||' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:37:9: '||'
+			{
+			match("||"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__70"
+
+	// $ANTLR start "T__71"
+	public final void mT__71() throws RecognitionException {
+		try {
+			int _type = T__71;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:38:7: ( '}' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:38:9: '}'
+			{
+			match('}'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__71"
+
+	// $ANTLR start "T__72"
+	public final void mT__72() throws RecognitionException {
+		try {
+			int _type = T__72;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
 			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:39:7: ( '~' )
 			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:39:9: '~'
 			{
@@ -663,15 +665,15 @@ public class progLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "T__70"
+	// $ANTLR end "T__72"
 
 	// $ANTLR start "REAL"
 	public final void mREAL() throws RecognitionException {
 		try {
 			int _type = REAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:501:5: ( 'real' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:501:7: 'real'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:530:5: ( 'real' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:530:7: 'real'
 			{
 			match("real"); 
 
@@ -691,8 +693,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = CONST;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:502:6: ( 'const' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:502:8: 'const'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:531:6: ( 'const' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:531:8: 'const'
 			{
 			match("const"); 
 
@@ -712,8 +714,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = TUPLETYPE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:503:10: ( 'tuple' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:503:12: 'tuple'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:532:10: ( 'tuple' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:532:12: 'tuple'
 			{
 			match("tuple"); 
 
@@ -733,8 +735,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = LISTTYPE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:504:9: ( 'list' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:504:11: 'list'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:533:9: ( 'list' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:533:11: 'list'
 			{
 			match("list"); 
 
@@ -754,8 +756,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = FUN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:505:4: ( 'fun' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:505:6: 'fun'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:534:4: ( 'fun' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:534:6: 'fun'
 			{
 			match("fun"); 
 
@@ -775,8 +777,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = PROGRAM;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:506:8: ( 'program' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:506:10: 'program'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:535:8: ( 'program' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:535:10: 'program'
 			{
 			match("program"); 
 
@@ -796,8 +798,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = MOD;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:509:4: ( 'mod' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:509:6: 'mod'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:538:4: ( 'mod' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:538:6: 'mod'
 			{
 			match("mod"); 
 
@@ -817,8 +819,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = DIV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:510:4: ( 'div' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:510:6: 'div'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:539:4: ( 'div' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:539:6: 'div'
 			{
 			match("div"); 
 
@@ -838,8 +840,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:513:3: ( 'if' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:513:5: 'if'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:542:3: ( 'if' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:542:5: 'if'
 			{
 			match("if"); 
 
@@ -859,8 +861,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = THEN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:514:5: ( 'then' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:514:7: 'then'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:543:5: ( 'then' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:543:7: 'then'
 			{
 			match("then"); 
 
@@ -880,8 +882,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = ELSEIF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:515:7: ( 'elseif' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:515:9: 'elseif'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:7: ( 'elseif' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:9: 'elseif'
 			{
 			match("elseif"); 
 
@@ -901,8 +903,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = ELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:516:5: ( 'else' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:516:7: 'else'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:5: ( 'else' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:7: 'else'
 			{
 			match("else"); 
 
@@ -922,8 +924,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = LIST;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:519:5: ( 'List' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:519:7: 'List'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:548:5: ( 'List' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:548:7: 'List'
 			{
 			match("List"); 
 
@@ -943,8 +945,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = TUPLE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:520:6: ( 'Tuple' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:520:8: 'Tuple'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:549:6: ( 'Tuple' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:549:8: 'Tuple'
 			{
 			match("Tuple"); 
 
@@ -964,8 +966,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = AND;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:523:4: ( 'and' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:523:6: 'and'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:552:4: ( 'and' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:552:6: 'and'
 			{
 			match("and"); 
 
@@ -985,8 +987,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = OR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:524:3: ( 'or' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:524:5: 'or'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:553:3: ( 'or' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:553:5: 'or'
 			{
 			match("or"); 
 
@@ -1006,8 +1008,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = NOT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:525:4: ( 'not' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:525:6: 'not'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:554:4: ( 'not' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:554:6: 'not'
 			{
 			match("not"); 
 
@@ -1027,8 +1029,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = IMPLIES;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:526:8: ( 'implies' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:526:10: 'implies'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:555:8: ( 'implies' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:555:10: 'implies'
 			{
 			match("implies"); 
 
@@ -1048,8 +1050,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = FORALL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:527:7: ( 'forall' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:527:9: 'forall'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:556:7: ( 'forall' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:556:9: 'forall'
 			{
 			match("forall"); 
 
@@ -1069,8 +1071,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = EXISTS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:528:7: ( 'exist' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:528:9: 'exist'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:557:7: ( 'exist' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:557:9: 'exist'
 			{
 			match("exist"); 
 
@@ -1090,8 +1092,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = SORTED;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:529:7: ( 'sorted' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:529:9: 'sorted'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:558:7: ( 'sorted' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:558:9: 'sorted'
 			{
 			match("sorted"); 
 
@@ -1111,8 +1113,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = EXECUTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:531:8: ( 'execute' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:531:10: 'execute'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:560:8: ( 'execute' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:560:10: 'execute'
 			{
 			match("execute"); 
 
@@ -1132,8 +1134,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = TEMPLATE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:532:9: ( 'template' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:532:11: 'template'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:561:9: ( 'template' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:561:11: 'template'
 			{
 			match("template"); 
 
@@ -1153,8 +1155,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = DO;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:533:3: ( 'do' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:533:5: 'do'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:562:3: ( 'do' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:562:5: 'do'
 			{
 			match("do"); 
 
@@ -1174,8 +1176,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = FOR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:534:4: ( 'for' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:534:6: 'for'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:563:4: ( 'for' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:563:6: 'for'
 			{
 			match("for"); 
 
@@ -1195,8 +1197,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = TO;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:535:3: ( 'to' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:535:5: 'to'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:564:3: ( 'to' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:564:5: 'to'
 			{
 			match("to"); 
 
@@ -1216,8 +1218,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = ANNOTATION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:536:11: ( '@' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:536:13: '@'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:565:11: ( '@' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:565:13: '@'
 			{
 			match('@'); 
 			}
@@ -1236,8 +1238,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = PRE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:537:4: ( 'pre' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:537:6: 'pre'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:566:4: ( 'pre' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:566:6: 'pre'
 			{
 			match("pre"); 
 
@@ -1257,8 +1259,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = POST;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:538:5: ( 'post' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:538:7: 'post'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:567:5: ( 'post' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:567:7: 'post'
 			{
 			match("post"); 
 
@@ -1278,8 +1280,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = END;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:539:5: ( 'end' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:539:7: 'end'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:568:5: ( 'end' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:568:7: 'end'
 			{
 			match("end"); 
 
@@ -1299,8 +1301,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = MECHANISM;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:540:10: ( 'mechanism' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:540:12: 'mechanism'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:569:10: ( 'mechanism' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:569:12: 'mechanism'
 			{
 			match("mechanism"); 
 
@@ -1320,8 +1322,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = AGENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:541:6: ( 'agent' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:541:8: 'agent'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:570:6: ( 'agent' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:570:8: 'agent'
 			{
 			match("agent"); 
 
@@ -1341,8 +1343,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = NEW;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:542:4: ( 'new' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:542:6: 'new'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:571:4: ( 'new' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:571:6: 'new'
 			{
 			match("new"); 
 
@@ -1362,8 +1364,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = VAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:543:4: ( 'var' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:543:6: 'var'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:572:4: ( 'var' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:572:6: 'var'
 			{
 			match("var"); 
 
@@ -1378,17 +1380,59 @@ public class progLexer extends Lexer {
 	}
 	// $ANTLR end "VAR"
 
+	// $ANTLR start "EXPECTED"
+	public final void mEXPECTED() throws RecognitionException {
+		try {
+			int _type = EXPECTED;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:573:9: ( 'expected' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:573:11: 'expected'
+			{
+			match("expected"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "EXPECTED"
+
+	// $ANTLR start "PRIOR_INFO"
+	public final void mPRIOR_INFO() throws RecognitionException {
+		try {
+			int _type = PRIOR_INFO;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:574:11: ( 'prior_Info' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:574:13: 'prior_Info'
+			{
+			match("prior_Info"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "PRIOR_INFO"
+
 	// $ANTLR start "MULTI_COMMENTS"
 	public final void mMULTI_COMMENTS() throws RecognitionException {
 		try {
 			int _type = MULTI_COMMENTS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:15: ( '/*' ( . )* '*/' )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:17: '/*' ( . )* '*/'
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:575:15: ( '/*' ( . )* '*/' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:575:17: '/*' ( . )* '*/'
 			{
 			match("/*"); 
 
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:22: ( . )*
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:575:22: ( . )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -1409,7 +1453,7 @@ public class progLexer extends Lexer {
 
 				switch (alt1) {
 				case 1 :
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:544:22: .
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:575:22: .
 					{
 					matchAny(); 
 					}
@@ -1439,12 +1483,12 @@ public class progLexer extends Lexer {
 		try {
 			int _type = COMMENTS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:9: ( '//' ( . )* ( '\\n' | '\\r' ) )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:11: '//' ( . )* ( '\\n' | '\\r' )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:576:9: ( '//' ( . )* ( '\\n' | '\\r' ) )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:576:11: '//' ( . )* ( '\\n' | '\\r' )
 			{
 			match("//"); 
 
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:16: ( . )*
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:576:16: ( . )*
 			loop2:
 			while (true) {
 				int alt2=2;
@@ -1458,7 +1502,7 @@ public class progLexer extends Lexer {
 
 				switch (alt2) {
 				case 1 :
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:545:16: .
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:576:16: .
 					{
 					matchAny(); 
 					}
@@ -1494,10 +1538,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = NUMERIC;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:8: ( ( '0' .. '9' )+ (| ( '.' ( ( '0' .. '9' )+ ) ) ) )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:10: ( '0' .. '9' )+ (| ( '.' ( ( '0' .. '9' )+ ) ) )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:8: ( ( '0' .. '9' )+ (| ( '.' ( ( '0' .. '9' )+ ) ) ) )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:10: ( '0' .. '9' )+ (| ( '.' ( ( '0' .. '9' )+ ) ) )
 			{
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:10: ( '0' .. '9' )+
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:10: ( '0' .. '9' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -1530,7 +1574,7 @@ public class progLexer extends Lexer {
 				cnt3++;
 			}
 
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:22: (| ( '.' ( ( '0' .. '9' )+ ) ) )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:22: (| ( '.' ( ( '0' .. '9' )+ ) ) )
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0=='.') ) {
@@ -1543,21 +1587,21 @@ public class progLexer extends Lexer {
 
 			switch (alt5) {
 				case 1 :
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:23: 
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:23: 
 					{
 					}
 					break;
 				case 2 :
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:24: ( '.' ( ( '0' .. '9' )+ ) )
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:24: ( '.' ( ( '0' .. '9' )+ ) )
 					{
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:24: ( '.' ( ( '0' .. '9' )+ ) )
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:25: '.' ( ( '0' .. '9' )+ )
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:24: ( '.' ( ( '0' .. '9' )+ ) )
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:25: '.' ( ( '0' .. '9' )+ )
 					{
 					match('.'); 
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:28: ( ( '0' .. '9' )+ )
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:29: ( '0' .. '9' )+
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:28: ( ( '0' .. '9' )+ )
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:29: ( '0' .. '9' )+
 					{
-					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:546:29: ( '0' .. '9' )+
+					// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:577:29: ( '0' .. '9' )+
 					int cnt4=0;
 					loop4:
 					while (true) {
@@ -1615,8 +1659,8 @@ public class progLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:547:7: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:547:9: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:578:7: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:578:9: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -1626,7 +1670,7 @@ public class progLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:547:33: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:578:33: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1671,10 +1715,10 @@ public class progLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:548:4: ( ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+ )
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:548:6: ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:579:4: ( ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+ )
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:579:6: ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+
 			{
-			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:548:6: ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+
+			// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:579:6: ( ' ' | '\\t' | '\\n' | '\\r' | '\\u000C' )+
 			int cnt7=0;
 			loop7:
 			while (true) {
@@ -1721,203 +1765,203 @@ public class progLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:8: ( T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | REAL | CONST | TUPLETYPE | LISTTYPE | FUN | PROGRAM | MOD | DIV | IF | THEN | ELSEIF | ELSE | LIST | TUPLE | AND | OR | NOT | IMPLIES | FORALL | EXISTS | SORTED | EXECUTE | TEMPLATE | DO | FOR | TO | ANNOTATION | PRE | POST | END | MECHANISM | AGENT | NEW | VAR | MULTI_COMMENTS | COMMENTS | NUMERIC | ID | WS )
-		int alt8=67;
+		// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:8: ( T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | REAL | CONST | TUPLETYPE | LISTTYPE | FUN | PROGRAM | MOD | DIV | IF | THEN | ELSEIF | ELSE | LIST | TUPLE | AND | OR | NOT | IMPLIES | FORALL | EXISTS | SORTED | EXECUTE | TEMPLATE | DO | FOR | TO | ANNOTATION | PRE | POST | END | MECHANISM | AGENT | NEW | VAR | EXPECTED | PRIOR_INFO | MULTI_COMMENTS | COMMENTS | NUMERIC | ID | WS )
+		int alt8=69;
 		alt8 = dfa8.predict(input);
 		switch (alt8) {
 			case 1 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:10: T__43
-				{
-				mT__43(); 
-
-				}
-				break;
-			case 2 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:16: T__44
-				{
-				mT__44(); 
-
-				}
-				break;
-			case 3 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:22: T__45
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:10: T__45
 				{
 				mT__45(); 
 
 				}
 				break;
-			case 4 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:28: T__46
+			case 2 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:16: T__46
 				{
 				mT__46(); 
 
 				}
 				break;
-			case 5 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:34: T__47
+			case 3 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:22: T__47
 				{
 				mT__47(); 
 
 				}
 				break;
-			case 6 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:40: T__48
+			case 4 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:28: T__48
 				{
 				mT__48(); 
 
 				}
 				break;
-			case 7 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:46: T__49
+			case 5 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:34: T__49
 				{
 				mT__49(); 
 
 				}
 				break;
-			case 8 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:52: T__50
+			case 6 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:40: T__50
 				{
 				mT__50(); 
 
 				}
 				break;
-			case 9 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:58: T__51
+			case 7 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:46: T__51
 				{
 				mT__51(); 
 
 				}
 				break;
-			case 10 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:64: T__52
+			case 8 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:52: T__52
 				{
 				mT__52(); 
 
 				}
 				break;
-			case 11 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:70: T__53
+			case 9 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:58: T__53
 				{
 				mT__53(); 
 
 				}
 				break;
-			case 12 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:76: T__54
+			case 10 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:64: T__54
 				{
 				mT__54(); 
 
 				}
 				break;
-			case 13 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:82: T__55
+			case 11 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:70: T__55
 				{
 				mT__55(); 
 
 				}
 				break;
-			case 14 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:88: T__56
+			case 12 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:76: T__56
 				{
 				mT__56(); 
 
 				}
 				break;
-			case 15 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:94: T__57
+			case 13 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:82: T__57
 				{
 				mT__57(); 
 
 				}
 				break;
-			case 16 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:100: T__58
+			case 14 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:88: T__58
 				{
 				mT__58(); 
 
 				}
 				break;
-			case 17 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:106: T__59
+			case 15 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:94: T__59
 				{
 				mT__59(); 
 
 				}
 				break;
-			case 18 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:112: T__60
+			case 16 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:100: T__60
 				{
 				mT__60(); 
 
 				}
 				break;
-			case 19 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:118: T__61
+			case 17 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:106: T__61
 				{
 				mT__61(); 
 
 				}
 				break;
-			case 20 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:124: T__62
+			case 18 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:112: T__62
 				{
 				mT__62(); 
 
 				}
 				break;
-			case 21 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:130: T__63
+			case 19 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:118: T__63
 				{
 				mT__63(); 
 
 				}
 				break;
-			case 22 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:136: T__64
+			case 20 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:124: T__64
 				{
 				mT__64(); 
 
 				}
 				break;
-			case 23 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:142: T__65
+			case 21 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:130: T__65
 				{
 				mT__65(); 
 
 				}
 				break;
-			case 24 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:148: T__66
+			case 22 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:136: T__66
 				{
 				mT__66(); 
 
 				}
 				break;
-			case 25 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:154: T__67
+			case 23 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:142: T__67
 				{
 				mT__67(); 
 
 				}
 				break;
-			case 26 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:160: T__68
+			case 24 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:148: T__68
 				{
 				mT__68(); 
 
 				}
 				break;
-			case 27 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:166: T__69
+			case 25 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:154: T__69
 				{
 				mT__69(); 
 
 				}
 				break;
-			case 28 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:172: T__70
+			case 26 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:160: T__70
 				{
 				mT__70(); 
+
+				}
+				break;
+			case 27 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:166: T__71
+				{
+				mT__71(); 
+
+				}
+				break;
+			case 28 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:172: T__72
+				{
+				mT__72(); 
 
 				}
 				break;
@@ -2160,35 +2204,49 @@ public class progLexer extends Lexer {
 				}
 				break;
 			case 63 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:374: MULTI_COMMENTS
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:374: EXPECTED
+				{
+				mEXPECTED(); 
+
+				}
+				break;
+			case 64 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:383: PRIOR_INFO
+				{
+				mPRIOR_INFO(); 
+
+				}
+				break;
+			case 65 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:394: MULTI_COMMENTS
 				{
 				mMULTI_COMMENTS(); 
 
 				}
 				break;
-			case 64 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:389: COMMENTS
+			case 66 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:409: COMMENTS
 				{
 				mCOMMENTS(); 
 
 				}
 				break;
-			case 65 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:398: NUMERIC
+			case 67 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:418: NUMERIC
 				{
 				mNUMERIC(); 
 
 				}
 				break;
-			case 66 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:406: ID
+			case 68 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:426: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 67 :
-				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:409: WS
+			case 69 :
+				// /Users/yefang/Documents/research/frontEndGen/test3/src/rules/prog.g:1:429: WS
 				{
 				mWS(); 
 
@@ -2202,19 +2260,20 @@ public class progLexer extends Lexer {
 	protected DFA8 dfa8 = new DFA8(this);
 	static final String DFA8_eotS =
 		"\14\uffff\1\56\1\60\1\62\1\uffff\1\53\2\uffff\2\53\4\uffff\16\53\1\uffff"+
-		"\1\53\12\uffff\13\53\1\141\7\53\1\152\1\153\10\53\1\165\3\53\2\uffff\13"+
-		"\53\1\uffff\1\u0084\1\u0086\1\53\1\u0088\1\53\1\u008a\1\53\1\u008c\2\uffff"+
-		"\4\53\1\u0091\2\53\1\u0094\1\53\1\uffff\1\u0096\1\u0097\1\u0098\2\53\1"+
-		"\u009b\1\53\1\u009d\1\53\1\u009f\2\53\1\u00a2\1\53\1\uffff\1\53\1\uffff"+
-		"\1\53\1\uffff\1\u00a6\1\uffff\1\53\1\uffff\1\53\1\u00aa\2\53\1\uffff\1"+
-		"\u00ad\1\53\1\uffff\1\53\3\uffff\2\53\1\uffff\1\53\1\uffff\1\53\1\uffff"+
-		"\1\u00b4\1\u00b5\1\uffff\3\53\1\uffff\3\53\1\uffff\1\u00bc\1\53\1\uffff"+
-		"\1\u00be\1\u00bf\1\53\1\u00c1\1\53\1\u00c3\2\uffff\1\53\1\u00c5\3\53\1"+
-		"\u00c9\1\uffff\1\53\2\uffff\1\53\1\uffff\1\53\1\uffff\1\53\1\uffff\1\u00ce"+
-		"\1\53\1\u00d0\1\uffff\1\u00d1\2\53\1\u00d4\1\uffff\1\53\2\uffff\2\53\1"+
-		"\uffff\1\u00d8\1\53\1\u00da\1\uffff\1\53\1\uffff\1\u00dc\1\uffff";
+		"\1\53\12\uffff\13\53\1\141\7\53\1\153\1\154\10\53\1\167\3\53\2\uffff\13"+
+		"\53\1\uffff\1\u0086\1\u0088\1\53\1\u008a\2\53\1\u008d\1\53\1\u008f\2\uffff"+
+		"\5\53\1\u0095\2\53\1\u0098\1\53\1\uffff\1\u009a\1\u009b\1\u009c\2\53\1"+
+		"\u009f\1\53\1\u00a1\1\53\1\u00a3\2\53\1\u00a6\1\53\1\uffff\1\53\1\uffff"+
+		"\1\53\1\uffff\1\53\1\u00ab\1\uffff\1\53\1\uffff\1\53\1\u00af\3\53\1\uffff"+
+		"\1\u00b3\1\53\1\uffff\1\53\3\uffff\2\53\1\uffff\1\53\1\uffff\1\53\1\uffff"+
+		"\1\u00ba\1\u00bb\1\uffff\4\53\1\uffff\3\53\1\uffff\1\u00c3\2\53\1\uffff"+
+		"\1\u00c6\1\u00c7\1\53\1\u00c9\1\53\1\u00cb\2\uffff\1\53\1\u00cd\4\53\1"+
+		"\u00d2\1\uffff\2\53\2\uffff\1\53\1\uffff\1\53\1\uffff\1\53\1\uffff\1\u00d8"+
+		"\2\53\1\u00db\1\uffff\1\u00dc\3\53\1\u00e0\1\uffff\2\53\2\uffff\1\u00e3"+
+		"\2\53\1\uffff\1\53\1\u00e7\1\uffff\1\53\1\u00e9\1\u00ea\1\uffff\1\53\2"+
+		"\uffff\1\u00ec\1\uffff";
 	static final String DFA8_eofS =
-		"\u00dd\uffff";
+		"\u00ed\uffff";
 	static final String DFA8_minS =
 		"\1\11\13\uffff\3\75\1\uffff\1\156\2\uffff\2\145\4\uffff\1\145\1\157\1"+
 		"\145\2\157\1\145\1\151\1\146\1\154\1\151\1\165\1\147\1\162\1\145\1\uffff"+
@@ -2222,48 +2281,50 @@ public class progLexer extends Lexer {
 		"\160\1\145\1\155\1\60\1\156\1\162\1\145\1\163\1\144\1\143\1\166\2\60\1"+
 		"\160\1\163\1\145\1\144\1\163\1\160\1\144\1\145\1\60\1\164\1\167\1\162"+
 		"\2\uffff\1\145\1\147\1\164\1\105\1\145\1\164\1\154\1\163\1\154\1\156\1"+
-		"\160\1\uffff\2\60\1\147\1\60\1\164\1\60\1\150\1\60\2\uffff\1\154\1\145"+
-		"\1\163\1\143\1\60\1\164\1\154\1\60\1\156\1\uffff\3\60\1\162\1\164\1\60"+
-		"\1\170\1\60\1\145\1\60\1\164\1\145\1\60\1\154\1\uffff\1\154\1\uffff\1"+
-		"\162\1\uffff\1\60\1\uffff\1\141\1\uffff\1\151\1\60\1\164\1\165\1\uffff"+
-		"\1\60\1\145\1\uffff\1\164\3\uffff\1\164\1\150\1\uffff\1\143\1\uffff\1"+
-		"\144\1\uffff\2\60\1\uffff\1\141\1\154\1\141\1\uffff\1\156\1\145\1\146"+
-		"\1\uffff\1\60\1\164\1\uffff\2\60\1\123\1\60\1\154\1\60\2\uffff\1\164\1"+
-		"\60\1\155\1\151\1\163\1\60\1\uffff\1\145\2\uffff\1\157\1\uffff\1\165\1"+
-		"\uffff\1\145\1\uffff\1\60\1\163\1\60\1\uffff\1\60\1\162\1\144\1\60\1\uffff"+
-		"\1\155\2\uffff\1\164\1\145\1\uffff\1\60\1\145\1\60\1\uffff\1\144\1\uffff"+
-		"\1\60\1\uffff";
+		"\160\1\uffff\2\60\1\147\1\60\1\157\1\164\1\60\1\150\1\60\2\uffff\1\154"+
+		"\1\145\1\163\1\143\1\145\1\60\1\164\1\154\1\60\1\156\1\uffff\3\60\1\162"+
+		"\1\164\1\60\1\170\1\60\1\145\1\60\1\164\1\145\1\60\1\154\1\uffff\1\154"+
+		"\1\uffff\1\162\1\uffff\1\162\1\60\1\uffff\1\141\1\uffff\1\151\1\60\1\164"+
+		"\1\165\1\143\1\uffff\1\60\1\145\1\uffff\1\164\3\uffff\1\164\1\150\1\uffff"+
+		"\1\143\1\uffff\1\144\1\uffff\2\60\1\uffff\1\141\1\154\1\141\1\137\1\uffff"+
+		"\1\156\1\145\1\146\1\uffff\1\60\2\164\1\uffff\2\60\1\123\1\60\1\154\1"+
+		"\60\2\uffff\1\164\1\60\1\155\1\111\1\151\1\163\1\60\1\uffff\2\145\2\uffff"+
+		"\1\157\1\uffff\1\165\1\uffff\1\145\1\uffff\1\60\1\156\1\163\1\60\1\uffff"+
+		"\1\60\1\144\1\162\1\144\1\60\1\uffff\1\146\1\155\2\uffff\1\60\1\164\1"+
+		"\145\1\uffff\1\157\1\60\1\uffff\1\145\2\60\1\uffff\1\144\2\uffff\1\60"+
+		"\1\uffff";
 	static final String DFA8_maxS =
 		"\1\176\13\uffff\3\75\1\uffff\1\156\2\uffff\1\151\1\157\4\uffff\1\145\1"+
 		"\157\2\165\1\162\2\157\1\155\1\170\1\151\1\165\1\156\1\162\1\157\1\uffff"+
 		"\1\141\1\57\11\uffff\1\163\1\156\1\163\1\164\1\172\1\162\1\141\1\156\1"+
 		"\160\1\145\1\155\1\172\1\156\1\162\1\157\1\163\1\144\1\143\1\166\2\172"+
-		"\1\160\1\163\1\151\1\144\1\163\1\160\1\144\1\145\1\172\1\164\1\167\1\162"+
+		"\1\160\1\163\1\160\1\144\1\163\1\160\1\144\1\145\1\172\1\164\1\167\1\162"+
 		"\2\uffff\1\145\1\147\1\164\1\105\1\145\1\164\1\154\1\163\1\154\1\156\1"+
-		"\160\1\uffff\2\172\1\147\1\172\1\164\1\172\1\150\1\172\2\uffff\1\154\1"+
-		"\145\1\163\1\143\1\172\1\164\1\154\1\172\1\156\1\uffff\3\172\1\162\1\164"+
-		"\1\172\1\170\1\172\1\145\1\172\1\164\1\145\1\172\1\154\1\uffff\1\154\1"+
-		"\uffff\1\162\1\uffff\1\172\1\uffff\1\141\1\uffff\1\151\1\172\1\164\1\165"+
-		"\1\uffff\1\172\1\145\1\uffff\1\164\3\uffff\1\164\1\150\1\uffff\1\143\1"+
-		"\uffff\1\144\1\uffff\2\172\1\uffff\1\141\1\154\1\141\1\uffff\1\156\1\145"+
-		"\1\146\1\uffff\1\172\1\164\1\uffff\2\172\1\123\1\172\1\154\1\172\2\uffff"+
-		"\1\164\1\172\1\155\1\151\1\163\1\172\1\uffff\1\145\2\uffff\1\157\1\uffff"+
-		"\1\165\1\uffff\1\145\1\uffff\1\172\1\163\1\172\1\uffff\1\172\1\162\1\144"+
-		"\1\172\1\uffff\1\155\2\uffff\1\164\1\145\1\uffff\1\172\1\145\1\172\1\uffff"+
-		"\1\144\1\uffff\1\172\1\uffff";
+		"\160\1\uffff\2\172\1\147\1\172\1\157\1\164\1\172\1\150\1\172\2\uffff\1"+
+		"\154\1\145\1\163\1\143\1\145\1\172\1\164\1\154\1\172\1\156\1\uffff\3\172"+
+		"\1\162\1\164\1\172\1\170\1\172\1\145\1\172\1\164\1\145\1\172\1\154\1\uffff"+
+		"\1\154\1\uffff\1\162\1\uffff\1\162\1\172\1\uffff\1\141\1\uffff\1\151\1"+
+		"\172\1\164\1\165\1\143\1\uffff\1\172\1\145\1\uffff\1\164\3\uffff\1\164"+
+		"\1\150\1\uffff\1\143\1\uffff\1\144\1\uffff\2\172\1\uffff\1\141\1\154\1"+
+		"\141\1\137\1\uffff\1\156\1\145\1\146\1\uffff\1\172\2\164\1\uffff\2\172"+
+		"\1\123\1\172\1\154\1\172\2\uffff\1\164\1\172\1\155\1\111\1\151\1\163\1"+
+		"\172\1\uffff\2\145\2\uffff\1\157\1\uffff\1\165\1\uffff\1\145\1\uffff\1"+
+		"\172\1\156\1\163\1\172\1\uffff\1\172\1\144\1\162\1\144\1\172\1\uffff\1"+
+		"\146\1\155\2\uffff\1\172\1\164\1\145\1\uffff\1\157\1\172\1\uffff\1\145"+
+		"\2\172\1\uffff\1\144\2\uffff\1\172\1\uffff";
 	static final String DFA8_acceptS =
 		"\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\3\uffff\1\22"+
 		"\1\uffff\1\24\1\25\2\uffff\1\31\1\32\1\33\1\34\16\uffff\1\67\2\uffff\1"+
-		"\101\1\102\1\103\1\15\1\14\1\17\1\16\1\21\1\20\41\uffff\1\77\1\100\13"+
-		"\uffff\1\66\10\uffff\1\64\1\45\11\uffff\1\54\16\uffff\1\41\1\uffff\1\65"+
-		"\1\uffff\1\70\1\uffff\1\43\1\uffff\1\44\4\uffff\1\72\2\uffff\1\53\1\uffff"+
-		"\1\55\1\75\1\76\2\uffff\1\40\1\uffff\1\30\1\uffff\1\35\2\uffff\1\46\3"+
-		"\uffff\1\71\3\uffff\1\50\2\uffff\1\51\6\uffff\1\36\1\37\6\uffff\1\60\1"+
-		"\uffff\1\52\1\74\1\uffff\1\26\1\uffff\1\61\1\uffff\1\57\3\uffff\1\47\4"+
-		"\uffff\1\42\1\uffff\1\56\1\62\2\uffff\1\63\3\uffff\1\73\1\uffff\1\27\1"+
-		"\uffff\1\23";
+		"\103\1\104\1\105\1\15\1\14\1\17\1\16\1\21\1\20\41\uffff\1\101\1\102\13"+
+		"\uffff\1\66\11\uffff\1\64\1\45\12\uffff\1\54\16\uffff\1\41\1\uffff\1\65"+
+		"\1\uffff\1\70\2\uffff\1\43\1\uffff\1\44\5\uffff\1\72\2\uffff\1\53\1\uffff"+
+		"\1\55\1\75\1\76\2\uffff\1\40\1\uffff\1\30\1\uffff\1\35\2\uffff\1\46\4"+
+		"\uffff\1\71\3\uffff\1\50\3\uffff\1\51\6\uffff\1\36\1\37\7\uffff\1\60\2"+
+		"\uffff\1\52\1\74\1\uffff\1\26\1\uffff\1\61\1\uffff\1\57\4\uffff\1\47\5"+
+		"\uffff\1\42\2\uffff\1\56\1\62\3\uffff\1\63\2\uffff\1\77\3\uffff\1\73\1"+
+		"\uffff\1\27\1\100\1\uffff\1\23";
 	static final String DFA8_specialS =
-		"\u00dd\uffff}>";
+		"\u00ed\uffff}>";
 	static final String[] DFA8_transitionS = {
 			"\2\54\1\uffff\2\54\22\uffff\1\54\1\1\4\uffff\1\2\1\uffff\1\3\1\4\1\5"+
 			"\1\6\1\7\1\10\1\11\1\51\12\52\1\12\1\13\1\14\1\15\1\16\1\17\1\47\10\53"+
@@ -2334,29 +2395,27 @@ public class progLexer extends Lexer {
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\142",
 			"\1\143",
-			"\1\145\11\uffff\1\144",
-			"\1\146",
+			"\1\145\3\uffff\1\146\5\uffff\1\144",
 			"\1\147",
 			"\1\150",
 			"\1\151",
+			"\1\152",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\154",
 			"\1\155",
-			"\1\157\3\uffff\1\156",
-			"\1\160",
-			"\1\161",
+			"\1\156",
+			"\1\160\3\uffff\1\157\6\uffff\1\161",
 			"\1\162",
 			"\1\163",
 			"\1\164",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\165",
 			"\1\166",
-			"\1\167",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\170",
-			"",
-			"",
 			"\1\171",
 			"\1\172",
+			"",
+			"",
 			"\1\173",
 			"\1\174",
 			"\1\175",
@@ -2366,127 +2425,145 @@ public class progLexer extends Lexer {
 			"\1\u0081",
 			"\1\u0082",
 			"\1\u0083",
+			"\1\u0084",
+			"\1\u0085",
 			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\1\u0085\31\53",
-			"\1\u0087",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\1\u0087\31\53",
 			"\1\u0089",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u008b",
+			"\1\u008c",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"",
-			"",
-			"\1\u008d",
 			"\1\u008e",
-			"\1\u008f",
-			"\1\u0090",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
+			"",
+			"\1\u0090",
+			"\1\u0091",
 			"\1\u0092",
 			"\1\u0093",
+			"\1\u0094",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u0095",
+			"\1\u0096",
+			"\1\u0097",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u0099",
 			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u0099",
-			"\1\u009a",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u009c",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u009d",
 			"\1\u009e",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u00a0",
-			"\1\u00a1",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u00a3",
-			"",
+			"\1\u00a2",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u00a4",
-			"",
 			"\1\u00a5",
-			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"",
 			"\1\u00a7",
 			"",
 			"\1\u00a8",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\10\53\1\u00a9\21\53",
-			"\1\u00ab",
+			"",
+			"\1\u00a9",
+			"",
+			"\1\u00aa",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
 			"\1\u00ac",
 			"",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u00ae",
-			"",
-			"\1\u00af",
-			"",
-			"",
-			"",
+			"\1\u00ad",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\10\53\1\u00ae\21\53",
 			"\1\u00b0",
 			"\1\u00b1",
-			"",
 			"\1\u00b2",
 			"",
-			"\1\u00b3",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00b4",
 			"",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00b5",
+			"",
+			"",
 			"",
 			"\1\u00b6",
 			"\1\u00b7",
+			"",
 			"\1\u00b8",
 			"",
 			"\1\u00b9",
-			"\1\u00ba",
-			"\1\u00bb",
 			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
+			"\1\u00bc",
 			"\1\u00bd",
+			"\1\u00be",
+			"\1\u00bf",
 			"",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u00c0",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00c1",
 			"\1\u00c2",
+			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"",
-			"",
 			"\1\u00c4",
+			"\1\u00c5",
+			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u00c6",
-			"\1\u00c7",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u00c8",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"",
 			"\1\u00ca",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"",
-			"",
-			"\1\u00cb",
 			"",
 			"\1\u00cc",
-			"",
-			"\1\u00cd",
-			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00ce",
 			"\1\u00cf",
+			"\1\u00d0",
+			"\1\u00d1",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
-			"\1\u00d2",
 			"\1\u00d3",
-			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00d4",
+			"",
 			"",
 			"\1\u00d5",
 			"",
-			"",
 			"\1\u00d6",
+			"",
 			"\1\u00d7",
 			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"\1\u00d9",
+			"\1\u00da",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			"",
-			"\1\u00db",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00dd",
+			"\1\u00de",
+			"\1\u00df",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
+			"\1\u00e1",
+			"\1\u00e2",
+			"",
+			"",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\1\u00e4",
+			"\1\u00e5",
+			"",
+			"\1\u00e6",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
+			"\1\u00e8",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+			"",
+			"\1\u00eb",
+			"",
 			"",
 			"\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
 			""
@@ -2523,7 +2600,7 @@ public class progLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | REAL | CONST | TUPLETYPE | LISTTYPE | FUN | PROGRAM | MOD | DIV | IF | THEN | ELSEIF | ELSE | LIST | TUPLE | AND | OR | NOT | IMPLIES | FORALL | EXISTS | SORTED | EXECUTE | TEMPLATE | DO | FOR | TO | ANNOTATION | PRE | POST | END | MECHANISM | AGENT | NEW | VAR | MULTI_COMMENTS | COMMENTS | NUMERIC | ID | WS );";
+			return "1:1: Tokens : ( T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | REAL | CONST | TUPLETYPE | LISTTYPE | FUN | PROGRAM | MOD | DIV | IF | THEN | ELSEIF | ELSE | LIST | TUPLE | AND | OR | NOT | IMPLIES | FORALL | EXISTS | SORTED | EXECUTE | TEMPLATE | DO | FOR | TO | ANNOTATION | PRE | POST | END | MECHANISM | AGENT | NEW | VAR | EXPECTED | PRIOR_INFO | MULTI_COMMENTS | COMMENTS | NUMERIC | ID | WS );";
 		}
 	}
 

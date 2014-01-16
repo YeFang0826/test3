@@ -7,6 +7,7 @@ import agent.agentTemplate;
 
 import statement.defineFunStatement;
 import term.accessT;
+import term.inputPrior;
 import term.tl;
 import expression.expression;
 import functionCall.listCall;
@@ -44,7 +45,8 @@ public class accessField {
 			return this;
 	}
 	
-	public object exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> exsitsVar, ArrayList<String> forallVar){
+	public object exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, 
+			defineFunStatement mechanism, ArrayList<String> exsitsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){
 		if(this.object!=null){
 			if(knownVars.containsKey(this.object) && knownVars.get(this.object).type.equals("agent")){
 				agentO a= (agentO)knownVars.get(this.object);
@@ -59,10 +61,13 @@ public class accessField {
 			}
 		}
 		else if(this.objectl!= null){
-			object a = this.objectl.access(knownVars, agentTemplate, mechanism, exsitsVar, forallVar);
+			object a = this.objectl.access(knownVars, agentTemplate, mechanism, exsitsVar, forallVar, prior_Info, expected);
 			if(a.type.equals("agent")){
-				if(((agentO)a).vars.containsKey(this.field))
+				if(((agentO)a).vars.containsKey(this.field)){
+					if(expected && ((agentO)a).vars.get(this.field).type.equals("string") && prior_Info.containsKey(((string)((agentO)a).vars.get(this.field)).s))
+						return new number(prior_Info.get(((string)((agentO)a).vars.get(this.field)).s));
 					return ((agentO)a).vars.get(this.field);
+				}
 				else if(((agentO)a).funs.containsKey(this.field)){
 					return ((agentO)a).funs.get(this.field);
 				}

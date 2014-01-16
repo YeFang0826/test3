@@ -257,43 +257,55 @@ public class expression {
 			return ret;
 		}
 	
-		
 		public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate,
-				defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
-			object ret = null;			
+				defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_info,
+					boolean expected){
+			
+			object ret = null;	
+			
 			if(this.leaf!=null){
 				if(this.leaf.type.equals("var")){
-					if(knownVars.containsKey(((var)this.leaf).s))
+					if(!expected && knownVars.containsKey(((var)this.leaf).s))
 						ret = knownVars.get(((var)this.leaf).s);
-					else
+					else if(expected && prior_info.containsKey(((var)this.leaf).s)){
+						ret = new number(prior_info.get(((var)this.leaf).s));
+					}
+					else if(!expected)
 						ret = new string(((var)this.leaf).s);
+					else if(expected)
+						System.out.println("Prior info not known!");
+						
 				}
 				else if(this.leaf.type.equals("num")){
 					ret = new number(((num)this.leaf).value);
 				}
 				else if(this.leaf.type.equals("expression")){
-					ret = (((expressionT)this.leaf).expr).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar);
+					ret = (((expressionT)this.leaf).expr).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar, prior_info,expected);
 				}
 				else if(this.leaf.type.equals("tlaccess")){
-					ret = ((tl)this.leaf).access(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+					ret = ((tl)this.leaf).access(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 				}
 				else if(this.leaf.type.equals("agent")){
 					if(agentTemplate.containsKey(((agentT)this.leaf).atype)){
-						ret = ((agentT)this.leaf).exe(agentTemplate, knownVars, mechanism, existsVar, forallVar);
+						ret = ((agentT)this.leaf).exe(agentTemplate, knownVars, mechanism, existsVar, forallVar, prior_info, expected);
 					}
 				}
 				else if(this.leaf.type.equals("hole")){
-					ret =((holeT)this.leaf).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+					ret =((holeT)this.leaf).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 				}
 				else if(this.leaf.type.equals("setExclude")){
-					ret = ((setExclude)this.leaf).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar);
+					ret = ((setExclude)this.leaf).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar, prior_info, expected);
 				}
 				else if(this.leaf.type.equals("sortedList")){
-					ret = new string(((sortedList)this.leaf).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar));
+					ret = new string(((sortedList)this.leaf).eval_exe(knownVars, agentTemplate,mechanism, existsVar, forallVar, prior_info, expected));
 				}
 				else if(this.leaf.type.equals("accessField")){
-					ret = ((accessT)this.leaf).af.exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+					ret = ((accessT)this.leaf).af.exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 				}
+				else if(this.leaf.type.equals("expectedValue")){
+					ret = ((expectedValue)this.leaf).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, true);
+				}
+				
 				else if(this.leaf.type.equals("direct")|| this.leaf.type.equals("indirect") || this.leaf.type.equals("tupleCall") 
 						|| this.leaf.type.equals("listCall")){
 					
@@ -303,7 +315,7 @@ public class expression {
 					ArrayList<object> inValue = new ArrayList<object>();
 					
 					for(int i=0; i< inExpr.size(); i++){ 
-						inValue.add(inExpr.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar));
+						inValue.add(inExpr.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, false));
 					}
 					
 					
@@ -399,12 +411,12 @@ public class expression {
 							}
 							else if(call.type.equals("direct")){
 								if(((directCall)call).name.equals(mechanism.name))
-									y = mechanism.eval_exe(agentTemplate, mechanism, (ArrayList<object>)inputMap.values().toArray()[i], existsVar, forallVar);
+									y = mechanism.eval_exe(agentTemplate, mechanism, (ArrayList<object>)inputMap.values().toArray()[i], existsVar, forallVar, prior_info, expected);
 							}
 							else if(call.type.equals("indirect")){
-								 object function = ((indirectCall)call).af.exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+								 object function = ((indirectCall)call).af.exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 								 if(function.type.equals("function")){
-									 y = ((functionO)function).fun.eval_exe(agentTemplate, mechanism, in, existsVar, forallVar);
+									 y = ((functionO)function).fun.eval_exe(agentTemplate, mechanism, in, existsVar, forallVar, prior_info, expected);
 								 }
 								
 							}
@@ -448,105 +460,124 @@ public class expression {
 			}
 			
 			else if(this.left!=null && this.right != null){
-				object left = this.left.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-				object right = this.right.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+				object left = this.left.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
+				object right = this.right.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 				String le=null;
 				String re=null;
 				
-				if(!left.type.equals("map") && !right.type.equals("map")){
-					
-					if(left.type.equals("string"))
-						le = ((string)left).s;
-					else if(left.type.equals("number"))
-						le = Double.toString(((number)left).n);
-					
-					if(right.type.equals("string"))
-						re = ((string)right).s;
-					else if(right.type.equals("number"))
-						re = Double.toString(((number)right).n);
-					
-					if(this.op.equals("==") && le.equals(re))
-						return new string("true");
-					else if(this.op.equals("==") && !le.equals(re))
-						return new string("false");
-					else if((le.equals("true")||le.equals("false")) && (re.equals("true")||re.equals("false"))){
-						if(this.op.equals("and") && le.equals("true") && re.equals("true"))
-							return new string("true");
-						else
-							return new string("false");
+					if(expected && (this.op.equals("+") || this.op.equals("-") || this.op.equals("*"))){
+						if(right.type.equals("number") && left.type.equals("number")){
+							double r = ((number)right).n;
+							double l = ((number)left).n;
+							if(this.op.equals("+"))
+								return new number(r + l);
+							else if(this.op.equals("-"))
+								return new number(r - l);
+							else if(this.op.equals("*"))
+								return new number(r * l);
+							else {
+								System.out.println("arithmetic operation is not supported!");
+							}
+						}
+						else{
+							System.out.println("prior info is not available!");
+						}
 					}
-					else{
-						deparen retString = new deparen(le, re, this.op);
-						return new string(retString.print());
-					}
-				}
 				
-				else if(left.type.equals("map")){
-					HashMap<object, object> retMap = new HashMap<object, object>();
-					object condition1;
-					object tempM1;
-					String c = null;
-					for(int x=0; x< ((map)left).m.size(); x++){
-						condition1 = (object) ((map)left).m.keySet().toArray()[x];
-						tempM1 = (object) ((map)left).m.values().toArray()[x];
+					else if(!expected && !left.type.equals("map") && !right.type.equals("map")){
+					
+						if(left.type.equals("string"))
+							le = ((string)left).s;
+						else if(left.type.equals("number"))
+							le = Double.toString(((number)left).n);
+					
+						if(right.type.equals("string"))
+							re = ((string)right).s;
+						else if(right.type.equals("number"))
+							re = Double.toString(((number)right).n);
+					
 						
-							if(right.type.equals("map")){
-								object condition2;
-								object tempM2;
+						if(this.op.equals("==") && le.equals(re))
+							return new string("true");
+						else if(this.op.equals("==") && !le.equals(re))
+							return new string("false");
+						else if((le.equals("true")||le.equals("false")) && (re.equals("true")||re.equals("false"))){
+							if(this.op.equals("and") && le.equals("true") && re.equals("true"))
+								return new string("true");
+							else
+								return new string("false");
+						}
+						
+						else{
+							deparen retString = new deparen(le, re, this.op);
+							return new string(retString.print());
+						}
+					}
+				
+					else if(!expected && left.type.equals("map")){
+						HashMap<object, object> retMap = new HashMap<object, object>();
+						object condition1;
+						object tempM1;
+						String c = null;
+						for(int x=0; x< ((map)left).m.size(); x++){
+							condition1 = (object) ((map)left).m.keySet().toArray()[x];
+							tempM1 = (object) ((map)left).m.values().toArray()[x];
+						
+								if(right.type.equals("map")){
+									object condition2;
+									object tempM2;
 									
-									for(int y=0; y< ((map)right).m.size(); y++){
-										condition2 = (object) ((map)right).m.keySet().toArray()[y];
-										tempM2 = (object) ((map)right).m.values().toArray()[y];
+										for(int y=0; y< ((map)right).m.size(); y++){
+											condition2 = (object) ((map)right).m.keySet().toArray()[y];
+											tempM2 = (object) ((map)right).m.values().toArray()[y];
 									
-										if((!tempM1.type.equals("map") && !tempM2.type.equals("map"))){
+											if((!tempM1.type.equals("map") && !tempM2.type.equals("map"))){
 											
-											if(tempM1.type.equals("string"))
-												le = ((string)tempM1).s;
-											else if(tempM1.type.equals("number"))
-												le = Double.toString(((number)tempM1).n);
+												if(tempM1.type.equals("string"))
+													le = ((string)tempM1).s;
+												else if(tempM1.type.equals("number"))
+													le = Double.toString(((number)tempM1).n);
 											
-											if(tempM2.type.equals("string"))
-												re = ((string)tempM2).s;
-											else if(tempM2.type.equals("number"))
-												re = Double.toString(((number)tempM2).n);
+												if(tempM2.type.equals("string"))
+													re = ((string)tempM2).s;
+												else if(tempM2.type.equals("number"))
+													re = Double.toString(((number)tempM2).n);
 											
-											if((((string)condition1).s.equals("true") || ((string)condition1).s.equals("false")) 
+												if((((string)condition1).s.equals("true") || ((string)condition1).s.equals("false")) 
 													&& (((string)condition2).s.equals("true") || ((string)condition2).s.equals("false")) ){
-												if(((string)condition1).s.equals("true") && ((string)condition2).s.equals("true"))
+													if(((string)condition1).s.equals("true") && ((string)condition2).s.equals("true"))
 														c ="true";
-												else
-													c="false";
-											}
-											else if(((string)condition1).s.equals("true") && !((string)condition2).s.equals("true"))
-												c = ((string)condition2).s;
+													else
+														c="false";
+												}
+												else if(((string)condition1).s.equals("true") && !((string)condition2).s.equals("true"))
+													c = ((string)condition2).s;
 											
-											else if(!((string)condition1).s.equals("true") && ((string)condition2).s.equals("true"))
-												c = ((string)condition1).s;
+												else if(!((string)condition1).s.equals("true") && ((string)condition2).s.equals("true"))
+													c = ((string)condition1).s;
 											
-											else if(((string)condition1).s.equals(((string)condition2).s))
-												c = ((string)condition1).s;
+												else if(((string)condition1).s.equals(((string)condition2).s))
+													c = ((string)condition1).s;
 											
-											else if(!((string)condition1).s.equals("false") && !((string)condition2).s.equals("false"))
-												c = "("+((string)condition1).s + " and "+((string)condition2).s+")";
-											else 
-												c = "false";
+												else if(!((string)condition1).s.equals("false") && !((string)condition2).s.equals("false"))
+													c = "("+((string)condition1).s + " and "+((string)condition2).s+")";
+												else 
+													c = "false";
 											
 											
 											if(this.op.equals("==") && le.equals(re))
 												retMap.put(new string(c), new string("true"));
 											else if(this.op.equals("==") && !le.equals(re))
 												retMap.put(new string(c), new string("false"));
-											else if((le.equals("true")||le.equals("true")) && (re.equals("true")||re.equals("true"))){
+											else if((le.equals("true")||le.equals("false")) && (re.equals("true")||re.equals("false")) && !c.equals("false")){
 												if(this.op.equals("and") && le.equals("true") && re.equals("true"))
 													retMap.put(new string(c), new string("true"));
 												else
 													retMap.put(new string(c), new string("false"));
 											}
 											else if(c!=null && !c.equals("false")){
-												if(this.op.equals("and"))
-													retMap.put(new string(c), new string("("+le + " " + this.op + " " + re+")"));
-												else
-													retMap.put(new string(c), new string("("+le + this.op + re+")"));
+												deparen retString = new deparen(le, re, this.op);
+												retMap.put(new string(c), new string(retString.print()));
 											}
 										}
 										else{
@@ -555,7 +586,7 @@ public class expression {
 										}
 								}
 							}
-							else{
+							else {
 								if((!tempM1.type.equals("map") && !right.type.equals("map"))){
 										
 										if(tempM1.type.equals("string"))
@@ -572,17 +603,15 @@ public class expression {
 											retMap.put(condition1, new string("true"));
 										else if(this.op.equals("==") && !le.equals(re))
 											retMap.put(condition1, new string("false"));
-										else if((le.equals("true")||le.equals("true")) && (re.equals("true")||re.equals("true"))){
+										else if((le.equals("true")||le.equals("false")) && (re.equals("true")||re.equals("false")) && !condition1.equals("false")){
 											if(this.op.equals("and") && le.equals("true") && re.equals("true"))
 												retMap.put(condition1, new string("true"));
 											else
 												retMap.put(condition1, new string("false"));
 										}
-										else{
-											if(this.op.equals("and"))
-												retMap.put(condition1, new string("("+le + " " + this.op + " " + re+")"));
-											else
-												retMap.put(condition1, new string("("+le + this.op + re+")"));
+										else if(condition1!=null && !condition1.equals("false")){
+											deparen retString = new deparen(le, re, this.op);
+											retMap.put(condition1, new string(retString.print()));
 										}
 								}
 								else{
@@ -595,7 +624,7 @@ public class expression {
 				}
 						
 					
-				else if (!left.type.equals("map") && right.type.equals("map")){
+				else if (!expected && !left.type.equals("map") && right.type.equals("map")){
 					HashMap<object, object> retMap = new HashMap<object, object>();
 					object condition1;
 					object tempM1;
@@ -613,24 +642,22 @@ public class expression {
 							
 							if(left.type.equals("string"))
 								le = ((string)left).s;
-							else if(right.type.equals("number"))
+							else if(left.type.equals("number"))
 								le = Double.toString(((number)left).n);
 							
 							if(this.op.equals("==") && le.equals(re))
 								retMap.put(condition1, new string("true"));
 							else if(this.op.equals("==") && !le.equals(re))
 								retMap.put(condition1, new string("false"));
-							else if((le.equals("true")||le.equals("true")) && (re.equals("true")||re.equals("true"))){
+							else if((le.equals("true")||le.equals("false")) && (re.equals("true")||re.equals("false")) && !condition1.equals("false")){
 								if(this.op.equals("and") && le.equals("true") && re.equals("true"))
 									retMap.put(condition1, new string("true"));
 								else
 									retMap.put(condition1, new string("false"));
 							}
-							else{
-								if(this.op.equals("and"))
-									retMap.put(condition1, new string("("+le + " " + this.op + " " + re+")"));
-								else
-									retMap.put(condition1, new string("("+le + this.op + re+")"));
+							else if(condition1!=null && !condition1.equals("false")){
+								deparen retString = new deparen(le, re, this.op);
+								retMap.put(condition1, new string(retString.print()));
 							}
 						
 						}
@@ -648,19 +675,22 @@ public class expression {
 					return null;
 				}
 			}
-			else if (this.left == null && this.right!=null && this.op.equals("~")){
+			
+			else if (this.left == null && this.right!=null && (this.op.equals("~") || this.op.equals("not"))){
 				//System.out.println("In expression evaluation: not op");
 				
-				object r=this.right.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+				object r=this.right.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_info, expected);
 				
-				if(r.type.equals("string") && ((string)r).s.equals("true"))
+				if(expected && r.type.equals("number") && this.op.equals("-"))
+					return new number(0-((number)r).n);
+				else if(!expected && r.type.equals("string") && ((string)r).s.equals("true"))
 					return new string("false");
-				else if(r.type.equals("string") && ((string)r).s.equals("false"))
+				else if(!expected && r.type.equals("string") && ((string)r).s.equals("false"))
 					return new string("true");
-				else if(r.type.equals("string"))
+				else if(!expected && r.type.equals("string"))
 					return new string("(not "+((string)r).s+")");
 			
-				else if(r.type.equals("map")){
+				else if(!expected && r.type.equals("map")){
 					object rx = null;
 					for(int i=0; i<((map)r).m.size();i++){
 						if(((object)((map)r).m.values().toArray()[i]).type.equals("string"))

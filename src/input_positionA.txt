@@ -35,6 +35,7 @@ program main [] =
        	 	elseif (id == result[1][0])
        	 		then ut = ctr2 * (value - result[1][1]);
      		else ut = 0;
+     		end if
     	end uf
     	
     end ag

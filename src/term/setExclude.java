@@ -23,9 +23,10 @@ public class setExclude extends term{
 	}
 	
 	
-	public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String>existsVar, ArrayList<String> forallVar){
+	public object eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, 
+			defineFunStatement mechanism, ArrayList<String>existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){
 		ArrayList<object> ret = new ArrayList<object>();
-		object remove = this.exclude.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+		object remove = this.exclude.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, expected);
 		if(remove.type.equals("number") && knownVars.containsKey(this.set) && knownVars.get(this.set).type.equals("list")){
 			for(int i=0; i<((list)knownVars.get(this.set)).l.size(); i++)
 				ret.add(((list)knownVars.get(this.set)).l.get(i));

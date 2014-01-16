@@ -110,6 +110,7 @@ public class ifStatement extends statement{
 		}
 		
 		for(int i=0; i<ifs.size(); i++){
+			tempRet = null;
 			temp= thens.get(i);
 			hasIf = false;
 			l = new ArrayList<statement>();
@@ -141,6 +142,7 @@ public class ifStatement extends statement{
 						for(int m=0; m<tempret.get(k).size(); m++){
 							templ.add(tempret.get(k).get(m));
 						}
+						templl.add(templ);
 					}
 					tempRet = templl;
 				}

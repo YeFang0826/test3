@@ -65,7 +65,28 @@ public class deparen {
 			}
 			return ret;
 		}
-		else if(this.op.equals("and") || this.op.equals("or") || this.op.equals("implies")){
+		else if(this.op.equals("&&") || this.op.equals("and")){
+			if(this.l.equals("true"))
+				return this.r;
+			else if(this.r.equals("true"))
+				return this.l;
+			else if(this.l.equals("false") || this.r.equals("false"))
+				return "false";
+			else
+			return ("(" + this.l + " and " + this.r +  ")");
+		}
+		else if(this.op.equals("||") || this.op.equals("or")){
+			if(this.l.equals("false"))
+				return this.r;
+			else if(this.r.equals("false"))
+				return this.l;
+			else if(this.l.equals("true") || this.r.equals("true"))
+				return "true";
+			else
+			return ("(" + this.l + " or " + this.r +  ")");
+		}
+			
+		else if( this.op.equals("implies")){
 			return ("(" + this.l + " " + this.op + " " + this.r +  ")");
 		}
 		else 

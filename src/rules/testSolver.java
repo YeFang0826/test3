@@ -13,17 +13,16 @@ import org.antlr.runtime.TokenStream;
 import program.program;
 
 import com.microsoft.z3.*;
-//f = exist{},forall{},f
 
-
+//f' = exist{},forall{},f
 
 public class testSolver {
    public static void main(String args[]) throws IOException, Z3Exception, RecognitionException{
 
 	// the input formula is an intermediate result, so we can assume that there is no grammar in the input formula
 	// 1.(F) 2.Spaces only between and|or|implies|not 3.each singlton needs to be in parentheses. 
-	   
-	   Scanner sc= new Scanner(new File("src/input_vcg_1.txt"));
+	  
+	   Scanner sc= new Scanner(new File("src/input_vcg_ut2.txt"));
 		String input = "";
 		String temp;
 		while(sc.hasNext()){
@@ -37,7 +36,7 @@ public class testSolver {
 		progParser parser = new progParser(tokenStream);
 		program result = parser.prog();
 		String f= result.playGame();
-		//System.out.println(f);
+		System.out.println(f);
 		
 	   
 		String filename = "src/frontEnd.txt";
@@ -56,7 +55,7 @@ public class testSolver {
 	   
 	   int index =0;
 	   index = scanInput(filename,fList,index,existVar,forallVar);
-	   //printTree(fList.get(fList.size()-1));
+	   printTree(fList.get(fList.size()-1));
 	   convertImplies(fList,index);
 	   pushNotIn(fList.get(fList.size()-1));
 	   shrink(fList.get(fList.size()-1),fList);
@@ -83,7 +82,7 @@ public class testSolver {
 	 
 	   if(LPPs.size()>0){
 			 for(int i =0; i<LPPs.size(); i++){
-				 //System.out.println("Sub-problem:"+i);
+				 System.out.println("Sub-problem:"+i);
 				 if(sat(existVar,LPPs.get(i)).equals("SAT")){
 					 //System.out.println(sat(existVar,LPPs.get(i)));
 					 break;
@@ -192,7 +191,6 @@ public class testSolver {
 	          // System.out.println("formula " + f);
 	       
 		   String solverRet=Check(ctx, ctx.MkAnd(ctx.SMTLIBFormulas()), Status.SATISFIABLE);
-		   
 		   System.out.println("*********"+solverRet+"*********");
 		   return solverRet;
 		   	//System.out.println("==============================================================================");
@@ -207,7 +205,10 @@ public class testSolver {
 	   
 	   		if (ret == Status.SATISFIABLE){
 	   			Model m = s.Model();
-	   			return ("SAT\n" + m.toString());
+	   			String test = m.toString();
+	   			System.out.println(m.toString());
+	   			//System.out.println(f.toString());
+	   			return "SAT";
 	   		}
 	   			
 	   		else if( ret == Status.UNKNOWN)
@@ -248,7 +249,7 @@ public class testSolver {
 				   break;
 			   }
 		   }
-		 
+		 System.out.println("has quantifiers");
 		   int i =0; 
 		   formula parentf = null;
 		   String single=""; 
@@ -258,7 +259,7 @@ public class testSolver {
 		  
 		   if(sc.hasNext()){
 			   temp = sc.next();
-			   //System.out.println(temp);
+			   System.out.print(temp + " ");
 			   
 			  if(temp.charAt(0)=='('){ 
 				  formula f=new formula();
@@ -287,7 +288,7 @@ public class testSolver {
 						  while(i<temp.length() && temp.charAt(i)!='(' && temp.charAt(i)!=')'){
 							  single = single + temp.charAt(i); i=i+1;
 						  }
-						  //System.out.println(single);
+						  System.out.println(single);
 					  }
 					  
 					  
@@ -301,11 +302,11 @@ public class testSolver {
 						 if(toadd.parent!=null){
 							 if(toadd.parent.c1==null){
 								 toadd.parent.addc(toadd, 0);
-								 //System.out.println("add left child");
+								 System.out.println("add left child");
 							 }
 							 else if(toadd.parent.c2==null){
 								 toadd.parent.addc(toadd, 1);
-								 //System.out.println("add right child");
+								 System.out.println("add right child");
 							 }
 						 }
 						 
@@ -318,11 +319,11 @@ public class testSolver {
 								 if(toadd.parent!=null){
 									 if(toadd.parent.c1==null){
 										 toadd.parent.addc(toadd, 0);
-										 //System.out.println("add left child");
+										 System.out.println("add left child");
 									 }
 									 else if(toadd.parent.c2==null){
 										 toadd.parent.addc(toadd, 1);
-										 //System.out.println("add right child");
+										 System.out.println("add right child");
 									 }
 								 }
 							}
@@ -372,7 +373,7 @@ public class testSolver {
 						  while(i<temp.length() && temp.charAt(i)!='(' && temp.charAt(i)!=')'){
 							  single = single + temp.charAt(i); i=i+1;
 						  }
-						  //System.out.println(single);
+						  System.out.println(single);
 					  }
 					  
 					  
@@ -383,16 +384,16 @@ public class testSolver {
 						  toadd.adds(single);
 						  single="";
 						  fList.add(toadd);
-						 //System.out.println(toadd.connect);
+						  System.out.println(toadd.connect);
 						 
 							 if(toadd.parent!=null){
 								 if(toadd.parent.c1==null){
 									 toadd.parent.addc(toadd, 0);
-									 //System.out.println("add left child");
+									 System.out.println("add left child");
 								 }
 								 else if(toadd.parent.c2==null){
 									 toadd.parent.addc(toadd, 1);
-									 //System.out.println("add right child");
+									 System.out.println("add right child");
 								 }
 							 }
 							 
@@ -406,11 +407,11 @@ public class testSolver {
 									 if(toadd.parent!=null){
 										 if(toadd.parent.c1==null){
 											 toadd.parent.addc(toadd, 0);
-											 //System.out.println("add left child");
+											 System.out.println("add left child");
 										 }
 										 else if(toadd.parent.c2==null){
 											 toadd.parent.addc(toadd, 1);
-											 //System.out.println("add right child");
+											 System.out.println("add right child");
 										 }
 									 }
 								}
@@ -451,35 +452,35 @@ public class testSolver {
 	}
 	   
 	public static void printTree(formula root)  {
-		   //System.out.println("Print syntax tree!");
+		   System.out.println("Print syntax tree!");
 		   Queue<formula> q = new LinkedList<formula>();
 		   
 		   if(root.c1!=null || root.c2!= null){
 			   q.add(root);
 		   }
 		   else if(root.singlton!=null){
-			  // System.out.println("("+root.singlton+")"); 
+			   System.out.println("("+root.singlton+")"); 
 		   }
 		   
 		   while(!q.isEmpty()){
 			   
 			   root = q.poll();
 			   //if(root.connect!=null && root.connect.equals("not")){
-			//   root = root.c1;
-			  // }
+				 //  root = root.c1;
+			   //}
 			   
-			  //System.out.println("       o");
-			  //System.out.println("       ||    ");
+			  System.out.println("       o");
+			  System.out.println("       ||    ");
 			   if(root.c1!=null){
 				   q.add(root.c1);
-				   //System.out.print("c1   ");
+				   System.out.print("c1   ");
 			   }
 			   if(root.connect!=null){
-				   //System.out.print(root.connect);
+				   System.out.print(root.connect);
 			   }
 			   if(root.c2!=null){
 				   q.add(root.c2);
-				   //System.out.println("   c2");
+				   System.out.println("   c2");
 			   }
 		   }
 	   	}
@@ -776,8 +777,12 @@ public class testSolver {
 					s=s+c;
 				if(!s.equals("")){
 					//System.out.println("s="+s);
-					if(compare(s, forallVar)==-1)
-							e.add(s);
+					if(compare(s, forallVar)==-1){
+						if(e == null)
+							e = new ArrayList<String>();
+						e.add(s);
+					}
+							
 					else
 						position = compare(s, forallVar);
 				}

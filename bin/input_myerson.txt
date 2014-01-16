@@ -1,7 +1,7 @@
 program main [] = 
 	real N = 3;
 	
-	@ pre : { sorted(p, 1) } @
+	@ pre : { sorted(p, 1) }  @
 	mechanism m[list[] p][tuple result]=
 	 real winner = p[0][0];
 	 real price = 0;
@@ -10,15 +10,14 @@ program main [] =
 	  	price = price + ? c * p[i][1];
 	 end for
 	 
-	 real reservePrice = 0.8 * p[0][2];
 	 real outprice = 0;
+	 real reservePrice = 0.5;	
+	 if(price >= reservePrice)
+		then outprice = price;
 		
-	 if(price >= reservePrice){
-		outprice = price;
-	 }
-	 else{
-		outprice = reservePrice;
-	 }
+	 else outprice = reservePrice;
+	 end if
+	 
 	 
 	 result = Tuple(winner, outprice);
 	 
@@ -33,6 +32,7 @@ program main [] =
     		if (id == result[0])
        	 		then ut = value - result[1];
      		else ut = 0;
+     		end if
     	end uf
     end ag
     
@@ -44,6 +44,7 @@ program main [] =
       	do 
       		a[i] = new ag(x, i);
       		e[i] = Tuple(a[i].self, a[i].b, a[i].v);
+      		prior_Info: a[i].v ~ [0, 1, 1];
       end for
       
       tuple return;
@@ -53,12 +54,7 @@ program main [] =
      
  end program main
  
- @ post : { forall(i, 0, N), 
- { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, 1.05*a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) }}
- 	and 
- 	{ return[1]>= 0.8 * a[0].v}}
- 	 @
-      	  
+ @ post : { forall(i, 0, N), { a[i].uf(return, a[i].self, a[i].v) <= a[i].uf(m(InsertSorted(Tuple(a[i].self, a[i].v), setExclude(e,i), 1)), a[i].self, a[i].v) }
+ 			and
+ 			{ expected(a[0].v) <= expected(return[1]) }}@
     	
-	   
-	

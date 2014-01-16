@@ -101,7 +101,7 @@ public class listCall extends functionCall{
 		String c = "";
 		for(int i=0; i<l.size(); i++){
 			c = "";
-			for(int j=0; j<l.size();j++){ // insert before ith element
+			for(int j=0; j<l.size();j++){ 
 				if(j==0){
 					if(i==j)
 						c = "("+l.get(j)+ "<=" +insert+ ")";
@@ -127,7 +127,7 @@ public class listCall extends functionCall{
 				c = "("+c + " and "+"("+l.get(i+1)+"<="+l.get(i)+"))";
 			
 		}
-		c = "("+c + " and "+"("+insert+"<="+l.get(l.size()-1)+"))";
+		c = "("+c + " and ("+insert+"<="+l.get(l.size()-1)+"))";
 		ret.add(c);
 		return ret;
 	}

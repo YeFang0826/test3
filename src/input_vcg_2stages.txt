@@ -14,7 +14,8 @@ program main [] =
 	 
    agent ag= 
     	real v;
-    	real b;
+    	real bf;
+    	real bs;
     	
     	fun uf [tuple result, const id, real value ] [ real ut ] =
     		if (id == result[0])
@@ -26,25 +27,24 @@ program main [] =
     
     execute
       list[] a;
-      list[] e;
+      list[] ef;
+      list[] es;
       
       for i = 0 to N-1
       	do 
       		a[i] = new ag(x, i);
-      		e[i] = Tuple(a[i].self, a[i].b);
+      		ef[i] = Tuple(a[i].self, a[i].bf);
+      		es[i] = Tuple(a[i].self, a[i].bs);
       end for
       
-      tuple return;
-      return = m(e);
       
-     end execute
+      tuple returnf = m(ef);
+      tuple returns = m(es);
+      
+    end execute
      
  end program main
  
- @ post : 
- 	{{{ a[0].uf(return, a[0].self, a[0].v) <= a[0].uf(m(InsertSorted(Tuple(a[0].self, 1.05*a[0].v), setExclude(e,0), 1)), a[0].self, a[0].v) }
- 			and
- 		{ a[1].uf(return, a[1].self, a[1].v) <= a[1].uf(m(InsertSorted(Tuple(a[1].self, 1.1*a[1].v), setExclude(e,1), 1)), a[1].self, a[1].v) }}
- 			and
- 			{ a[2].uf(return, a[2].self, a[2].v) <= a[2].uf(m(InsertSorted(Tuple(a[2].self, 1.15*a[2].v), setExclude(e,2), 1)), a[2].self, a[2].v) }} @
-      	  
+ @ post : forall(i, 0, N), { 1.05*a[i].uf(returnf, a[i].self, a[i].v)  + 0.95*a[i].uf(returns, a[i].self, a[i].v) <=  1.05*a[i].uf(m(InsertSorted(Tuple(a[i].self, a[i].v), setExclude(ef,i), 1)), a[i].self, a[i].v) 
+ 																												+ 0.95*a[i].uf(m(InsertSorted(Tuple(a[i].self, a[i].v), setExclude(es,i), 1)), a[i].self, a[i].v)} @
+      	

@@ -4,10 +4,7 @@ import java.util.HashMap;
 
 import agent.agentTemplate;
 
-import object.list;
-import object.number;
-import object.object;
-import object.tuple;
+import object.*;
 import statement.defineFunStatement;
 
 import expression.*;
@@ -64,33 +61,44 @@ public class tl extends term{
 		return ret = lhs;
 	}
 	
-	public object access(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> exsitsVar, ArrayList<String> forallVar){
+	public object access(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, 
+			defineFunStatement mechanism, ArrayList<String> exsitsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info,boolean expected){
 		object ret = null;
 		object lhs = null;
 		if(knownVars.containsKey(this.tlname)){
 			if(knownVars.get(this.tlname).type.equals("tuple")){
-				object index = (this.indexes.get(0)).eval_exe(knownVars, agentTemplate, mechanism, exsitsVar, forallVar);
+				object index = (this.indexes.get(0)).eval_exe(knownVars, agentTemplate, mechanism, exsitsVar, forallVar, prior_Info, expected);
 				if(index.type.equals("number"))
-					return ((tuple)(knownVars.get(this.tlname))).t.get((int)((number)index).n);
+					ret  = ((tuple)(knownVars.get(this.tlname))).t.get((int)((number)index).n);
+				
+				if(expected && ret.type.equals("string") && prior_Info.containsKey(((string)ret).s))
+					return new number(prior_Info.get(((string)ret).s));
+				else
+					return ret;
 			}
 			else if(knownVars.get(this.tlname).type.equals("list")){
 				object index;
 				lhs = ((list)knownVars.get(this.tlname));
 				for(int k=0; k< this.indexes.size(); k++){
-					index = (this.indexes.get(k)).eval_exe(knownVars, agentTemplate, mechanism, exsitsVar, forallVar);
+					index = (this.indexes.get(k)).eval_exe(knownVars, agentTemplate, mechanism, exsitsVar, forallVar, prior_Info, expected);
 					if(lhs.type.equals("tuple")){
 						lhs = ((tuple)lhs).t.get((int)((number)index).n);
+						if(expected && lhs.equals("string") && prior_Info.containsKey(((string)lhs).s))
+							return new number(prior_Info.get(((string)lhs).s));
 					}
 					else if(lhs.type.equals("list")){
 						lhs = ((list)lhs).l.get((int)((number)index).n);
+						if(expected && lhs.equals("string") && prior_Info.containsKey(((string)lhs).s))
+							return new number(prior_Info.get(((string)lhs).s));
 					}
 					else{
 						System.out.print("error in list/tuple access");
 					}
 				}
+				return lhs;
 			}
 		}
-		return ret = lhs;
+		return null;
 	}
 	
 }

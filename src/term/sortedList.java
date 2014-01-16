@@ -29,12 +29,13 @@ public class sortedList extends term{
 		return ret;
 	}
 	
-	public String eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
+	public String eval_exe(HashMap<String, object> knownVars, HashMap<String, agentTemplate> agentTemplate, defineFunStatement mechanism, 
+			ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){
 		String ret = null;
 		ArrayList<object> indexes = new ArrayList<object>();
 		
 		for(int i=0; i<this.dimension.size();i++){
-			indexes.add(this.dimension.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar));
+			indexes.add(this.dimension.get(i).eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, expected));
 		}
 		if(knownVars.containsKey(this.lname) && knownVars.get(this.lname).type.equals("list")){
 			object sorted = knownVars.get(this.lname);
@@ -48,7 +49,19 @@ public class sortedList extends term{
 					}
 				}
 			}
-			
+			if(sorted.type.equals("list")){
+				String sortedCondition = "";
+				
+				for(int i=0; i< sortedl.size()-1; i++){
+					if(i==0)
+						sortedCondition = "(" + sortedl.get(i+1) + "<=" +sortedl.get(i) + ")";
+					else
+						sortedCondition ="("+sortedCondition + " and (" + sortedl.get(i+1) + "<=" +sortedl.get(i) + "))";
+				}
+				
+				ret = sortedCondition;
+			}
+			/*
 			if(sorted.type.equals("list")){
 				String sortedCondition = "";
 				
@@ -56,10 +69,11 @@ public class sortedList extends term{
 					if(i==(sortedl.size()-1))
 						sortedCondition = "(" + sortedl.get(i) + "<=" +sortedl.get(i-1) + ")";
 					else
-						sortedCondition ="("+sortedCondition + "and (" + sortedl.get(i) + "<=" +sortedl.get(i-1) + "))";
+						sortedCondition ="("+sortedCondition + " and (" + sortedl.get(i) + "<=" +sortedl.get(i-1) + "))";
 				}
 				ret = sortedCondition;
 			}
+			*/
 		}
 		//System.out.println("************* sorted List:" + ret);
 		return ret;

@@ -28,11 +28,12 @@ public class agentT extends term{
 		return ret;
 	}
 	
-	public agentO exe(HashMap<String, agentTemplate> agentTemplate, HashMap<String, object> knownVars, defineFunStatement mechanism, ArrayList<String> existsVar, ArrayList<String> forallVar){
+	public agentO exe(HashMap<String, agentTemplate> agentTemplate, HashMap<String, object> knownVars, defineFunStatement mechanism, 
+					ArrayList<String> existsVar, ArrayList<String> forallVar, HashMap<String,Double> prior_Info, boolean expected){
 	
 		agentTemplate template = agentTemplate.get(this.atype);
-		object index = this.index.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
-		object lable = this.lable.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar);
+		object index = this.index.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, expected);
+		object lable = this.lable.eval_exe(knownVars, agentTemplate, mechanism, existsVar, forallVar, prior_Info, expected);
 		agentO a = new agentO(this.atype);
 		
 		for (int i =0; i< template.vars.size(); i++){
